@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import os
 from setuptools import setup, find_packages
-
-from db_utils import __version__
-
 
 requirements = open('requirements.txt').read(-1).split()
 
+setup_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(setup_dir, 'pytest_27_app', 'VERSION'), 'r') as vf:
+    version = vf.read().strip()
+
+
 setup(
     name='db-utils',
-    version=__version__,
+    version=version,
     description='Run the database migrations',
     author='Jampp',
     install_requires=requirements,
