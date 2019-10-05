@@ -7,7 +7,7 @@ from db_utils import __version__
 from db_utils.consts import (
     MAIN_PARSER_DESCRIPTION,
     INITIALIZE_PARSER_DESCRIPTION, MIGRATE_PARSER_DESCRIPTION,
-    LIBCORE_MIGRATIONS_PATH, CLEANUP_PARSER_DESCRIPTION)
+    CLEANUP_PARSER_DESCRIPTION)
 from db_utils.command.run_migration import ALL_MIGRATION_TYPES
 
 
@@ -181,6 +181,5 @@ def add_common_arguments(parser):
     )
     parser.add_argument(
         '--migrations-path',
-        default=LIBCORE_MIGRATIONS_PATH,
-        help='The path where the different migrations files can be found '
+        help='The path where the different migrations files can be found'
     )
