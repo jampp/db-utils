@@ -25,6 +25,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
     ],
-    package_data={'': ['VERSION']},
+    package_data={'': ['VERSION', 'requirements.txt']},
     test_suite='tests',
 )
