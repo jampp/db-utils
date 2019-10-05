@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 requirements = open('requirements.txt').read(-1).split()
 
 setup_dir = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(setup_dir, 'pytest_27_app', 'VERSION'), 'r') as vf:
+with open(os.path.join(setup_dir, 'db_utils', 'VERSION'), 'r') as vf:
     version = vf.read().strip()
 
 
