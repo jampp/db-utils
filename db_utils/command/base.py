@@ -195,8 +195,8 @@ class BaseCommand(object):
         :param complete_filename: the path and name of the file to which
             calculate the has
         """
-        with open(complete_filename) as migration_file:
-            return hashlib.sha1(migration_file.read().encode('utf-8')).hexdigest()
+        with open(complete_filename, 'rb') as migration_file:
+            return hashlib.sha1(migration_file.read()).hexdigest()
 
     def print_sql(self, query):
         """
