@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import argparse
 from pygments.styles import get_all_styles
 
@@ -179,7 +180,10 @@ def add_common_arguments(parser):
         default='DEBUG',
         help='The logging level to use'
     )
+    migrations_path = os.environ.get('DB_UTILS_MIGRATIONS_PATH')
     parser.add_argument(
         '--migrations-path',
-        help='The path where the different migrations files can be found'
+        help='The path where the different migrations files can be found',
+        required=migrations_path is None,
+        default=migrations_path,
     )
