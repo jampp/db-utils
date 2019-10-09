@@ -88,3 +88,4 @@ ENV/
 tmp/
 *.log
 .vscode/
+.idea
