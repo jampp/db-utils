@@ -4,8 +4,6 @@ import os
 
 #: the default path where the migrations are
 current_path = os.path.dirname(__file__)
-LIBCORE_MIGRATIONS_PATH = os.path.relpath(os.path.join(
-    current_path, '..', '..', 'libcore', 'sql', 'changes'))
 
 #: the name of the table with all the migrations information
 MIGRATIONS_TABLENAME = 'db_migrations'

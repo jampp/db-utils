@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import argparse
 from pygments.styles import get_all_styles
 
@@ -7,7 +8,7 @@ from db_utils import __version__
 from db_utils.consts import (
     MAIN_PARSER_DESCRIPTION,
     INITIALIZE_PARSER_DESCRIPTION, MIGRATE_PARSER_DESCRIPTION,
-    LIBCORE_MIGRATIONS_PATH, CLEANUP_PARSER_DESCRIPTION)
+    CLEANUP_PARSER_DESCRIPTION)
 from db_utils.command.run_migration import ALL_MIGRATION_TYPES
 
 
@@ -179,8 +180,10 @@ def add_common_arguments(parser):
         default='DEBUG',
         help='The logging level to use'
     )
+    migrations_path = os.environ.get('DB_UTILS_MIGRATIONS_PATH')
     parser.add_argument(
         '--migrations-path',
-        default=LIBCORE_MIGRATIONS_PATH,
-        help='The path where the different migrations files can be found '
+        help='The path where the different migrations files can be found',
+        required=migrations_path is None,
+        default=migrations_path,
     )

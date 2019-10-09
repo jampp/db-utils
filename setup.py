@@ -28,7 +28,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    package_data={'': ['VERSION', 'LICENSE']},
     license='BSD 3-Clause',
+    package_data={'': ['VERSION', 'requirements.txt', 'LICENSE']},
     test_suite='tests',
 )
