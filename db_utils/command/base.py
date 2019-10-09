@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import os
 import hashlib
 import psycopg2
@@ -171,7 +173,9 @@ class BaseCommand(object):
         extension = '.%s' % self.files_extension
         filenames = [name for name in os.listdir(self.migrations_path) if name.endswith(extension)]
         # make sure that all the filenames are valid
-        invalid_filenames = filter(lambda filename: FILENAME_VALIDATION_REGEX.match(filename) is None, filenames)
+        invalid_filenames = list(
+            filter(lambda filename: FILENAME_VALIDATION_REGEX.match(filename) is None, filenames)
+        )
         if invalid_filenames:
             raise Exception(
                 "The filename '%s' doesn't use the required "
@@ -191,7 +195,7 @@ class BaseCommand(object):
         :param complete_filename: the path and name of the file to which
             calculate the has
         """
-        with open(complete_filename) as migration_file:
+        with open(complete_filename, 'rb') as migration_file:
             return hashlib.sha1(migration_file.read()).hexdigest()
 
     def print_sql(self, query):
@@ -199,9 +203,9 @@ class BaseCommand(object):
         Prints the SQL when using interactive or dry_run
         """
         if self.use_colors:
-            print highlight(query, self.sql_lexer, self.terminal_formatter)
+            print(highlight(query, self.sql_lexer, self.terminal_formatter))
         else:
-            print query
+            print(query)
 
     def execute_sql(self, cursor, query, **data):
         """
@@ -243,7 +247,7 @@ class BaseCommand(object):
         current_input = raw_input(question)
         current_input = current_input.lower()
         while current_input not in valid_input_values:
-            print 'Invalid value. Choose %s' % '/'.join(valid_input_values)
+            print('Invalid value. Choose %s' % '/'.join(valid_input_values))
             current_input = raw_input(question)
             current_input = current_input.lower()
 

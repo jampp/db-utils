@@ -72,8 +72,9 @@ class InitializeCommand(BaseCommand):
         try:
             self.validate_migration_table_exists()
             raise Exception('The migration table already exists so no initialization is required')
-        except Exception, e:
-            if 'The migration table does not exist' not in e.message:
+        except Exception as e:
+            message = getattr(e, 'message', e.args[0])
+            if 'The migration table does not exist' not in message:
                 raise
 
         existing_filenames = self.get_filesystem_migrations()

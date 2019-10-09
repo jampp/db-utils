@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import os
 import getpass
 import subprocess
@@ -45,7 +47,7 @@ class RunMigrationCommand(BaseCommand):
 
         if self.just_list_files:
             for (complete_filename, sha1) in files_to_execute:
-                print complete_filename
+                print(complete_filename)
         else:
             self.execute_missing(files_to_execute)
 
@@ -137,7 +139,7 @@ class RunMigrationCommand(BaseCommand):
                     valid_input_values=['yes', 'no', MANUALLY_EXECUTION]
                 )
                 if execution_type == 'no':
-                    print 'You chose not to run the migration. Exit'
+                    print('You chose not to run the migration. Exit')
                     break
             else:
                 execution_type = ''
