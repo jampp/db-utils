@@ -7,7 +7,7 @@ from .helper import BaseHelper
 from db_utils.command.base import BaseCommand
 
 from contextlib import contextmanager
-from StringIO import StringIO
+from io import StringIO
 
 
 @contextmanager
@@ -32,7 +32,7 @@ class BaseCommandTest(BaseHelper):
             self.command.validate_migration_table_exists()
 
         self.assertEqual(
-            cm.exception.message,
+            getattr(cm.exception, 'message', cm.exception.args[0]),
             'The migration table does not exist on the database so you must run the initialize command'
         )
 
@@ -58,7 +58,7 @@ class BaseCommandTest(BaseHelper):
                 self.command.get_filesystem_migrations()
 
             self.assertEqual(
-                cm.exception.message,
+                getattr(cm.exception, 'message', cm.exception.args[0]),
                 "The filename '%s' doesn't use the required filename format YYYYMMDD_index_pre/post_description." % filename
             )
 

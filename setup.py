@@ -27,7 +27,11 @@ setup(
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
-    package_data={'': ['VERSION']},
+    license='BSD 3-Clause',
+    package_data={'': ['VERSION', 'requirements.txt', 'LICENSE']},
     test_suite='tests',
 )

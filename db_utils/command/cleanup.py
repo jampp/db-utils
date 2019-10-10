@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 from logging import getLogger
 import os
 
@@ -44,7 +46,7 @@ class CleanupCommand(BaseCommand):
             if not self.batch_mode and not self.dry_run:
                 should_continue = self.check_input('Should it delete the row for the migration: %s?' % filename)
                 if not should_continue:
-                    print 'You chose not to delete the migration'
+                    print('You chose not to delete the migration')
                     return
 
             with self.connection:
@@ -86,7 +88,7 @@ class CleanupCommand(BaseCommand):
             if not (self.batch_mode or self.dry_run):
                 should_cleanup = self.check_input('Found the filename %s with invalid hash. Cleanup?' % filename)
                 if not should_cleanup:
-                    print 'Skip the hash update for file: %s' % filename
+                    print('Skip the hash update for file: %s' % filename)
                     continue
 
             with self.connection:
