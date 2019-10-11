@@ -1,18 +1,32 @@
 # -*- coding: utf-8 -*-
 
+import os
 from setuptools import setup, find_packages
 
-from db_utils import __version__
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+with open(os.path.join(current_dir, 'db_utils', 'VERSION'), 'r') as vf:
+    version = vf.read().strip()
 
 
-requirements = open('requirements.txt').read(-1).split()
+def parse_requirements_txt(filename='requirements.txt'):
+    with open(os.path.join(current_dir, filename)) as requirements_file:
+        requirements = requirements_file.readlines()
+        # remove whitespaces
+        requirements = [line.strip().replace(' ', '') for line in requirements]
+        # remove all the requirements that are comments
+        requirements = [line for line in requirements if not line.startswith('#')]
+        # remove empty lines
+        requirements = list(filter(None, requirements))
+        return requirements
+
 
 setup(
     name='db-utils',
-    version=__version__,
+    version=version,
     description='Run the database migrations',
     author='Jampp',
-    install_requires=requirements,
+    install_requires=parse_requirements_txt(),
     entry_points={
         'console_scripts': {
             'db-utils = db_utils.main:main'
