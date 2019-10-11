@@ -27,6 +27,7 @@ setup(
     description='Run the database migrations',
     author='Jampp',
     install_requires=parse_requirements_txt(),
+    extras_require={'dev': parse_requirements_txt('requirements-dev.txt')},
     entry_points={
         'console_scripts': {
             'db-utils = db_utils.main:main'
