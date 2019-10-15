@@ -19,24 +19,6 @@ It only works with Postgres database (from 9.2 forward).
 It is important to take into account that once that the file is
 executed it MUST not be updated because it won't be executed again.
 
-During development the workflow should be as follow:
-
-1. Create the SQL migration file
-
-2. Run it
-
-3. Code Review
-
-4. Rollback the executed migration file
-
-5. Update the SQL file
-
-6. Go to step 2
-
-Also, once that the migration has already been executed on production,
-you must no update the migration. In those cases, you must create a new
-one.
-
 To see more information, on the subcommand and parameters do:
 
     db-utils SUBCOMMAND --help
@@ -54,7 +36,7 @@ This is the first command that should be executed on the database
 to be able to mark all the files as already executed and start
 from there. But if you are starting with a new database created from
 the `schema.sql` file, then you don't want to mark all the files as
-marked. So you must use the `-just-base-schema` parameter to create
+marked. So you must use the `--just-base-schema` parameter to create
 the migration table and mark the min number of files as processed
 
 It is important to take into account that the executed date of
