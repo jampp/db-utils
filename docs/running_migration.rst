@@ -7,15 +7,15 @@ Running Migrations
 
 ``DB Utils`` is a very simple migration system:
 
-Given a path where the migrations files are, it will check which are missing. For this,
-it has a custom table on the database called ``db_migrations`` which has the path of
-the executed files and whem they were executed.
+Given a path where the migrations files are, it will check which have not been
+applied. For this, it has a custom table on the database called ``db_migrations``
+which has the path of the executed files and when they were executed.
 
 First time
 ==========
 
 If it is the first time you are running the migration against the database,
-make sure to run the migration with the ``--just-base-schema`` to create the ``db_migrations``
+make sure to run the migrations with the ``--just-base-schema`` to create the ``db_migrations``
 table. Check :ref:`connect_to_the_database`
 
 .. code-block:: console
@@ -24,7 +24,7 @@ table. Check :ref:`connect_to_the_database`
 
 
 Once that the initial ``db-utils`` setup has been done you could just run the
-migratinons as usuall
+migrations as usual
 
 Running Missing Migrations
 ==========================
@@ -60,13 +60,13 @@ So there are two solutions:
 Connect to the Database
 =======================
 
-There is more than one way that ``db-utils`` can use to connect to the
+There is more than one way that ``db-utils`` can onnect to the
 PostgreSQL database:
 
 - The PostgreSQL environment variables
 - Specifing the ``db-uri`` argument
 
-In both cases, you can read more information about this using ``--help``
+In both cases, you can read more information about this using the ``--help``
 parameter. For example:
 
 .. code-block:: console
