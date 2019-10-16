@@ -51,7 +51,7 @@ class CommandWorkflowTest(BaseHelper):
 
         self.assertTrue(self._check_table_exist('t0'))
         self.assertTrue(self._check_table_exist('t1'))
-        self.assertEquals(self._get_executed_migrations(), self.valid_filenames)
+        self.assertEqual(self._get_executed_migrations(), self.valid_filenames)
 
     def test_cleanup(self):
         main([
