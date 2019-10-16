@@ -28,7 +28,7 @@ class CleanupCommandTest(BaseHelper):
         self.command.run()
 
         executed = self._get_executed_migrations()
-        self.assertEquals(
+        self.assertEqual(
             executed,
             [self.valid_filenames[0]]
         )
