@@ -55,8 +55,10 @@ So there are two solutions:
 2. Work on the normal database, and in case that you have to return to
    ``master`` or rollback the migration, do the steps manually.
 
-Connecting to the Database
-==========================
+.. _connect_to_the_database:
+
+Connect to the Database
+=======================
 
 There is more than one way that ``db-utils`` can use to connect to the
 PostgreSQL database:
