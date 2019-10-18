@@ -22,7 +22,9 @@ SELECT
     finished_execution_at
 FROM {table}
 ORDER BY filename
-""".format(table=MIGRATIONS_TABLENAME)
+""".format(
+    table=MIGRATIONS_TABLENAME
+)
 
 #: used to check if the migration table exists or not
 CHECK_TABLE_EXISTS = """
@@ -39,7 +41,9 @@ INSERT INTO {table} (
 )
 VALUES
     (%(executed_by)s, %(filename)s, %(hashed_content)s, %(started_at)s, NULL, %(comment)s);
-""".format(table=MIGRATIONS_TABLENAME)
+""".format(
+    table=MIGRATIONS_TABLENAME
+)
 
 
 #: used to mark on the files as finished running successfully
@@ -49,11 +53,13 @@ SET
     finished_execution_at = %(finished_at)s
 WHERE
     filename = %(filename)s;
-""".format(table=MIGRATIONS_TABLENAME)
+""".format(
+    table=MIGRATIONS_TABLENAME
+)
 
 
 #: the regex used to be sure that the filename is valid
-FILENAME_VALIDATION_REGEX = re.compile('\d{8}_\d+_(pre|post)_.+')
+FILENAME_VALIDATION_REGEX = re.compile("\d{8}_\d+_(pre|post)_.+")
 
 
 class BaseCommand(object):
@@ -73,9 +79,17 @@ class BaseCommand(object):
         the other parameters
     """
 
-    def __init__(self, db_uri, use_colors, dry_run, batch_mode,
-            color_style, logging_level, migrations_path,
-            files_extension='sql'):
+    def __init__(
+        self,
+        db_uri,
+        use_colors,
+        dry_run,
+        batch_mode,
+        color_style,
+        logging_level,
+        migrations_path,
+        files_extension="sql",
+    ):
 
         self.db_uri = db_uri
         self.use_colors = use_colors
@@ -111,15 +125,15 @@ class BaseCommand(object):
         with self.connection:
             with self.connection.cursor() as cursor:
                 cursor.execute(
-                    CHECK_TABLE_EXISTS,
-                    dict(table_name=MIGRATIONS_TABLENAME)
+                    CHECK_TABLE_EXISTS, dict(table_name=MIGRATIONS_TABLENAME)
                 )
                 exists = cursor.fetchall()
                 if not exists:
                     raise Exception(
-                        'The migration table does not exist '
-                        'on the database so you must run the initialize '
-                        'command')
+                        "The migration table does not exist "
+                        "on the database so you must run the initialize "
+                        "command"
+                    )
 
     def get_executed_migrations(self, return_success=True):
         """
@@ -140,17 +154,16 @@ class BaseCommand(object):
         """
         with self.connection:
             with self.connection.cursor() as cursor:
-                cursor.execute(
-                    GET_EXISTING_MIGRATION_INFORMATION
-                )
+                cursor.execute(GET_EXISTING_MIGRATION_INFORMATION)
                 rows = cursor.fetchall()
                 failed_or_running = {row[0]: row[1] for row in rows if row[2] is None}
                 if failed_or_running and return_success:
                     raise Exception(
-                        'The following migration is already being '
+                        "The following migration is already being "
                         'executed or failed: "%s", so you can not run the migration '
-                        'system. If the migration failed then you must run the '
-                        '"cleanup" subcommand' % failed_or_running.keys()[0])
+                        "system. If the migration failed then you must run the "
+                        '"cleanup" subcommand' % failed_or_running.keys()[0]
+                    )
 
                 if return_success:
                     return {row[0]: row[1] for row in rows}
@@ -168,18 +181,28 @@ class BaseCommand(object):
         if not os.path.isdir(self.migrations_path):
             raise Exception(
                 "The identified path '%s' where the migrations files "
-                "should be doesn't exists" % self.migrations_path)
+                "should be doesn't exists" % self.migrations_path
+            )
 
-        extension = '.%s' % self.files_extension
-        filenames = [name for name in os.listdir(self.migrations_path) if name.endswith(extension)]
+        extension = ".%s" % self.files_extension
+        filenames = [
+            name
+            for name in os.listdir(self.migrations_path)
+            if name.endswith(extension)
+        ]
         # make sure that all the filenames are valid
         invalid_filenames = list(
-            filter(lambda filename: FILENAME_VALIDATION_REGEX.match(filename) is None, filenames)
+            filter(
+                lambda filename: FILENAME_VALIDATION_REGEX.match(filename) is None,
+                filenames,
+            )
         )
         if invalid_filenames:
             raise Exception(
                 "The filename '%s' doesn't use the required "
-                "filename format YYYYMMDD_index_pre/post_description." % invalid_filenames[0])
+                "filename format YYYYMMDD_index_pre/post_description."
+                % invalid_filenames[0]
+            )
 
         res = [os.path.join(self.migrations_path, name) for name in filenames]
 
@@ -195,7 +218,7 @@ class BaseCommand(object):
         :param complete_filename: the path and name of the file to which
             calculate the has
         """
-        with open(complete_filename, 'rb') as migration_file:
+        with open(complete_filename, "rb") as migration_file:
             return hashlib.sha1(migration_file.read()).hexdigest()
 
     def print_sql(self, query):
@@ -243,11 +266,11 @@ class BaseCommand(object):
         :rtype: str
         :return: the option that the user selected
         """
-        question += ' [' + '/'.join(valid_input_values) + '] '
+        question += " [" + "/".join(valid_input_values) + "] "
         current_input = raw_input(question)
         current_input = current_input.lower()
         while current_input not in valid_input_values:
-            print('Invalid value. Choose %s' % '/'.join(valid_input_values))
+            print("Invalid value. Choose %s" % "/".join(valid_input_values))
             current_input = raw_input(question)
             current_input = current_input.lower()
 
@@ -266,4 +289,4 @@ class BaseCommand(object):
         :return: True if the user anser YES, False if he answer NO
         """
         user_selection = self.check_answer(question, VALID_INPUT_VALUES)
-        return user_selection == 'yes'
+        return user_selection == "yes"

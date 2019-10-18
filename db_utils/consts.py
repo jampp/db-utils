@@ -6,11 +6,11 @@ import os
 current_path = os.path.dirname(__file__)
 
 #: the name of the table with all the migrations information
-MIGRATIONS_TABLENAME = 'db_migrations'
+MIGRATIONS_TABLENAME = "db_migrations"
 
 #: the valid values that the user can use when running the different
 #: commands in interactive mode
-VALID_INPUT_VALUES = ('yes', 'no')
+VALID_INPUT_VALUES = ("yes", "no")
 
 MAIN_PARSER_DESCRIPTION = """
 Used to setup or update the schema the Safiro DB Postgres Database.

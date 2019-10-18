@@ -8,7 +8,6 @@ from db_utils.command.initialize import CREATE_TABLE_SQL
 
 
 class CleanupCommandTest(BaseHelper):
-
     def setUp(self):
         super(CleanupCommandTest, self).setUp()
         self.command = CleanupCommand(**self.BASE_ARGS)
@@ -28,10 +27,7 @@ class CleanupCommandTest(BaseHelper):
         self.command.run()
 
         executed = self._get_executed_migrations()
-        self.assertEqual(
-            executed,
-            [self.valid_filenames[0]]
-        )
+        self.assertEqual(executed, [self.valid_filenames[0]])
 
     def test_correct_invalid_hash(self):
         self._create_migration_files()
@@ -41,14 +37,16 @@ class CleanupCommandTest(BaseHelper):
         with self.command.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    'UPDATE db_migrations SET hashed_content = %s WHERE filename = %s',
-                    ('123123123', self.valid_filenames[1])
+                    "UPDATE db_migrations SET hashed_content = %s WHERE filename = %s",
+                    ("123123123", self.valid_filenames[1]),
                 )
 
         self.command.run()
         data = self.command.get_executed_migrations()
         expected_data = {
-            filename: self.command.calculate_sha1(os.path.join(self.migrations_path, filename))
+            filename: self.command.calculate_sha1(
+                os.path.join(self.migrations_path, filename)
+            )
             for filename in self.valid_filenames
         }
         self.assertEqual(data, expected_data)

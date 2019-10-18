@@ -8,14 +8,18 @@ import subprocess
 from logging import getLogger
 from datetime import datetime
 
-from db_utils.command.base import BaseCommand, INSERT_MIGRATION_DATA, UPDATE_MIGRATION_DATA
+from db_utils.command.base import (
+    BaseCommand,
+    INSERT_MIGRATION_DATA,
+    UPDATE_MIGRATION_DATA,
+)
 
 
 logger = getLogger(__name__)
 
 
-MANUALLY_EXECUTION = 'manually'
-ALL_MIGRATION_TYPES = 'any'
+MANUALLY_EXECUTION = "manually"
+ALL_MIGRATION_TYPES = "any"
 
 
 class RunMigrationCommand(BaseCommand):
@@ -27,8 +31,9 @@ class RunMigrationCommand(BaseCommand):
         about the other parameters
     """
 
-    def __init__(self, migration_type, just_list_files,
-            psql_additional_options, *args, **kwargs):
+    def __init__(
+        self, migration_type, just_list_files, psql_additional_options, *args, **kwargs
+    ):
         super(RunMigrationCommand, self).__init__(*args, **kwargs)
         self.migration_type = migration_type
         self.psql_additional_options = psql_additional_options
@@ -40,9 +45,11 @@ class RunMigrationCommand(BaseCommand):
         already_executed_data = self.get_executed_migrations()
         files_to_execute = []
 
-        files_to_execute = self.find_missing_migrations(existing_filenames, already_executed_data)
+        files_to_execute = self.find_missing_migrations(
+            existing_filenames, already_executed_data
+        )
         if not files_to_execute:
-            logger.info('No migration is missing')
+            logger.info("No migration is missing")
             return
 
         if self.just_list_files:
@@ -71,13 +78,18 @@ class RunMigrationCommand(BaseCommand):
 
         # need to rever the already_executed_data to take into account
         # that the sha1 should be unique
-        sha1_filename = {sha1: filename for filename, sha1 in already_executed_data.items()}
+        sha1_filename = {
+            sha1: filename for filename, sha1 in already_executed_data.items()
+        }
 
         for complete_filename in existing_filenames:
 
             filename = os.path.basename(complete_filename)
-            migration_type = filename.split('_')[2]
-            if self.migration_type != ALL_MIGRATION_TYPES and migration_type != self.migration_type:
+            migration_type = filename.split("_")[2]
+            if (
+                self.migration_type != ALL_MIGRATION_TYPES
+                and migration_type != self.migration_type
+            ):
                 continue
 
             hashed_content = self.calculate_sha1(complete_filename)
@@ -94,21 +106,25 @@ class RunMigrationCommand(BaseCommand):
             if existing_hash is not None:
                 raise Exception(
                     'A file with the name "%s" already exists on the '
-                    'database but it has a different hash. You forgot to run '
-                    'the rollback?' % filename)
+                    "database but it has a different hash. You forgot to run "
+                    "the rollback?" % filename
+                )
 
             if sha1_filename.get(hashed_content):
                 if self.batch_mode:
                     logger.warning(
                         'A file with the same hash as "%s" already '
-                        'exists on the database. Maybe you renamed the file and '
-                        'forgot to run the rollback?', filename)
+                        "exists on the database. Maybe you renamed the file and "
+                        "forgot to run the rollback?",
+                        filename,
+                    )
                 else:
                     should_continue = self.check_input(
                         'A file with the same hash as "%s" already '
-                        'exists on the database. Continue?' % filename)
+                        "exists on the database. Continue?" % filename
+                    )
                     if not should_continue:
-                        raise Exception('You chose not to run the migration')
+                        raise Exception("You chose not to run the migration")
 
             else:
                 logger.debug("Found new migration file: '%s'", complete_filename)
@@ -135,24 +151,27 @@ class RunMigrationCommand(BaseCommand):
                 self.print_sql(file_content)
 
                 execution_type = self.check_answer(
-                    'Should it execute the migration: %s?' % filename,
-                    valid_input_values=['yes', 'no', MANUALLY_EXECUTION]
+                    "Should it execute the migration: %s?" % filename,
+                    valid_input_values=["yes", "no", MANUALLY_EXECUTION],
                 )
-                if execution_type == 'no':
-                    print('You chose not to run the migration. Exit')
+                if execution_type == "no":
+                    print("You chose not to run the migration. Exit")
                     break
             else:
-                execution_type = ''
+                execution_type = ""
 
             self.connection.autocommit = True
             self.file_content_splited = False
             started_at = datetime.now()
             if execution_type != MANUALLY_EXECUTION:
                 logger.info(
-                    'Running file: %s (%s out of %s)', filename,
-                    index + 1, len(files_to_execute))
+                    "Running file: %s (%s out of %s)",
+                    filename,
+                    index + 1,
+                    len(files_to_execute),
+                )
             else:
-                logger.info('Marking the migration: %s as executed', filename)
+                logger.info("Marking the migration: %s as executed", filename)
 
             with self.connection:
                 with self.connection.cursor() as cursor:
@@ -164,7 +183,7 @@ class RunMigrationCommand(BaseCommand):
                         hashed_content=sha1,
                         started_at=started_at,
                         finished_at=None,
-                        comment=None
+                        comment=None,
                     )
                     if execution_type != MANUALLY_EXECUTION:
                         self._execute_filename(file_content, complete_filename)
@@ -181,19 +200,19 @@ class RunMigrationCommand(BaseCommand):
             return
 
         psql_command = [
-            'psql',
-            '--quiet',
-            '--no-psqlrc',
-            '-v',
-            'ON_ERROR_STOP=1',
-            '-f',
+            "psql",
+            "--quiet",
+            "--no-psqlrc",
+            "-v",
+            "ON_ERROR_STOP=1",
+            "-f",
             complete_filename,
         ]
         if self.psql_additional_options:
-            psql_command += ['--%s' % option for option in self.psql_additional_options]
+            psql_command += ["--%s" % option for option in self.psql_additional_options]
 
         try:
             subprocess.check_call(psql_command + [self.db_uri])
         except Exception:
-            logger.exception('Error while running the migration: %s', complete_filename)
+            logger.exception("Error while running the migration: %s", complete_filename)
             raise
