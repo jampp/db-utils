@@ -8,6 +8,7 @@ Welcome to db-utils documentation!
     :maxdepth: 2
 
     installation
+    changelog
     creating_migration
     running_migration
 
