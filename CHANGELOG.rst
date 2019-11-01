@@ -25,6 +25,7 @@ Bugfixes
 --------
 
 * Added requirements-dev.txt to setup.py package_data
+* Missing requirements.txt when using pip to install package
 
 Technical Task
 --------------
