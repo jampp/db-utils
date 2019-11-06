@@ -20,6 +20,7 @@ Added
 
 * Created the documentation
 * The project can be used on Python3
+* Description to the README.rst
 
 Bugfixes
 --------
