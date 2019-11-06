@@ -7,7 +7,12 @@ from .helper import BaseHelper
 from db_utils.command.base import BaseCommand
 
 from contextlib import contextmanager
-from io import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    # do not use io for Python2 because there is some error
+    # on str/unicode
+    from io import StringIO
 
 
 @contextmanager
