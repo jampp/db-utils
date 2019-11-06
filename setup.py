@@ -51,7 +51,12 @@ setup(
         "Topic :: Database",
         "Topic :: Software Development",
     ],
-    license='BSD 3-Clause',
-    data_files=[('', ['db_utils/VERSION', 'requirements.txt', 'LICENSE', 'requirements-dev.txt'])],
-    test_suite='tests',
+    license="BSD 3-Clause",
+    data_files=[
+        (
+            "",
+            ["db_utils/VERSION", "requirements.txt", "LICENSE", "requirements-dev.txt"],
+        )
+    ],
+    test_suite="tests",
 )

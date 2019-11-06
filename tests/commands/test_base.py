@@ -7,6 +7,7 @@ from .helper import BaseHelper
 from db_utils.command.base import BaseCommand
 
 from contextlib import contextmanager
+
 try:
     from StringIO import StringIO
 except ImportError:
