@@ -6,28 +6,32 @@ import unittest
 from datetime import datetime
 
 from db_utils.consts import MIGRATIONS_TABLENAME
-from db_utils.command.base import INSERT_MIGRATION_DATA, UPDATE_MIGRATION_DATA, CHECK_TABLE_EXISTS
+from db_utils.command.base import (
+    INSERT_MIGRATION_DATA,
+    UPDATE_MIGRATION_DATA,
+    CHECK_TABLE_EXISTS,
+)
 
 #: the path where the migrations files are going to be created
-BASE_PATH = '/tmp/testing-dbutils'
+BASE_PATH = "/tmp/testing-dbutils"
 
 #: the URI used to be used to run the tests
-DB_URI = os.getenv('MIGRATIONS_DB_TESTS')
+DB_URI = os.getenv("MIGRATIONS_DB_TESTS")
 
 
 def invalid_dbname():
     if not DB_URI:
         return False
 
-    db_name = DB_URI.split('/')[-1]
-    if 'mat' in db_name:
+    db_name = DB_URI.split("/")[-1]
+    if "mat" in db_name:
         return True
 
     return False
 
 
-@unittest.skipIf(not DB_URI, 'Skip because no database was used')
-@unittest.skipIf(invalid_dbname(), 'Skip because using mat databases')
+@unittest.skipIf(not DB_URI, "Skip because no database was used")
+@unittest.skipIf(invalid_dbname(), "Skip because using mat databases")
 class BaseHelper(unittest.TestCase):
     """
     Base helper that is going to have some common functions for all
@@ -43,14 +47,14 @@ class BaseHelper(unittest.TestCase):
         use_colors=False,
         dry_run=False,
         batch_mode=True,
-        color_style='vim',
-        logging_level='DEBUG'
+        color_style="vim",
+        logging_level="DEBUG",
     )
 
     def setUp(self):
         self.command = None
         self.migrations_path = BASE_PATH
-        self.valid_filenames = ['20160101_0_pre_asd.sql', '20160202_0_post_asd.sql']
+        self.valid_filenames = ["20160101_0_pre_asd.sql", "20160202_0_post_asd.sql"]
         self.addCleanup(self._remove_path)
         os.makedirs(self.migrations_path)
 
@@ -59,9 +63,9 @@ class BaseHelper(unittest.TestCase):
             return
         with self.command.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute('DROP TABLE IF EXISTS %s' % MIGRATIONS_TABLENAME)
-                cursor.execute('DROP TABLE IF EXISTS t0')
-                cursor.execute('DROP TABLE IF EXISTS t1')
+                cursor.execute("DROP TABLE IF EXISTS %s" % MIGRATIONS_TABLENAME)
+                cursor.execute("DROP TABLE IF EXISTS t0")
+                cursor.execute("DROP TABLE IF EXISTS t1")
 
     def _remove_path(self):
         shutil.rmtree(BASE_PATH)
@@ -69,8 +73,8 @@ class BaseHelper(unittest.TestCase):
     def _create_migration_files(self):
         for index, filename in enumerate(self.valid_filenames):
             file_path = os.path.join(self.migrations_path, filename)
-            with open(file_path, 'w') as f:
-                f.write('CREATE TABLE t%s (id INTEGER)' % index)
+            with open(file_path, "w") as f:
+                f.write("CREATE TABLE t%s (id INTEGER)" % index)
 
     def _check_table_exist(self, table_name):
         with self.command.connection as connection:
@@ -81,7 +85,9 @@ class BaseHelper(unittest.TestCase):
     def _get_executed_migrations(self):
         with self.command.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute('SELECT filename FROM %s ORDER BY filename' % MIGRATIONS_TABLENAME)
+                cursor.execute(
+                    "SELECT filename FROM %s ORDER BY filename" % MIGRATIONS_TABLENAME
+                )
                 res = [row[0] for row in cursor]
                 return res
 
@@ -92,20 +98,17 @@ class BaseHelper(unittest.TestCase):
                     INSERT_MIGRATION_DATA,
                     dict(
                         filename=filename,
-                        executed_by='test',
+                        executed_by="test",
                         hashed_content=self.command.calculate_sha1(
                             os.path.join(self.migrations_path, filename)
                         ),
                         started_at=datetime.now(),
                         finished_at=None,
-                        comment=None
-                    )
+                        comment=None,
+                    ),
                 )
                 if run_ok:
                     cursor.execute(
                         UPDATE_MIGRATION_DATA,
-                        dict(
-                            filename=filename,
-                            finished_at=datetime.now(),
-                        )
+                        dict(filename=filename, finished_at=datetime.now()),
                     )

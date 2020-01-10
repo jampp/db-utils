@@ -5,7 +5,11 @@ import getpass
 from datetime import datetime
 
 from db_utils.consts import MIGRATIONS_TABLENAME
-from db_utils.command.base import BaseCommand, INSERT_MIGRATION_DATA, UPDATE_MIGRATION_DATA
+from db_utils.command.base import (
+    BaseCommand,
+    INSERT_MIGRATION_DATA,
+    UPDATE_MIGRATION_DATA,
+)
 
 #: The SQL instruction that is going to be used to create the table
 #: with the information to be able to create the db_migrations table
@@ -55,7 +59,9 @@ Any additional comment the user wanted to add when the migration was executed
 for future reference
 ';
 
-""".format(table=MIGRATIONS_TABLENAME)
+""".format(
+    table=MIGRATIONS_TABLENAME
+)
 
 
 class InitializeCommand(BaseCommand):
@@ -71,10 +77,12 @@ class InitializeCommand(BaseCommand):
     def run(self):
         try:
             self.validate_migration_table_exists()
-            raise Exception('The migration table already exists so no initialization is required')
+            raise Exception(
+                "The migration table already exists so no initialization is required"
+            )
         except Exception as e:
-            message = getattr(e, 'message', e.args[0])
-            if 'The migration table does not exist' not in message:
+            message = getattr(e, "message", e.args[0])
+            if "The migration table does not exist" not in message:
                 raise
 
         existing_filenames = self.get_filesystem_migrations()
@@ -95,10 +103,7 @@ class InitializeCommand(BaseCommand):
         # be used
         with self.connection:
             with self.connection.cursor() as cursor:
-                self.execute_sql(
-                    cursor,
-                    CREATE_TABLE_SQL
-                )
+                self.execute_sql(cursor, CREATE_TABLE_SQL)
                 if self.just_base_schema:
                     return
 
@@ -115,7 +120,7 @@ class InitializeCommand(BaseCommand):
                         executed_by=username,
                         hashed_content=sha1,
                         started_at=started_at,
-                        comment='System initialization'
+                        comment="System initialization",
                     )
                     self.execute_sql(
                         cursor,

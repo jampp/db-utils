@@ -15,14 +15,14 @@ def main(args=None):
     subparser_class = dict(
         initialize=InitializeCommand,
         migrate=RunMigrationCommand,
-        cleanup=CleanupCommand
+        cleanup=CleanupCommand,
     )
     klass = subparser_class[subparser_name]
     kwargs = vars(parsed_args)
-    kwargs.pop('subparser_name')
+    kwargs.pop("subparser_name")
     command = klass(**kwargs)
     command.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

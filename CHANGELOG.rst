@@ -36,3 +36,4 @@ Technical Task
 * Generate coverage report when running the tests
 * Added missing classifiers to setup.py
 * Create a version file
+* Format the code using black
