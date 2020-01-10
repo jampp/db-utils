@@ -20,12 +20,14 @@ Added
 
 * Created the documentation
 * The project can be used on Python3
+* Description to the README.rst
 
 Bugfixes
 --------
 
 * Added requirements-dev.txt to setup.py package_data
 * Missing requirements.txt when using pip to install package
+* Use Python 2 and 3 compatible function to get user input
 
 Technical Task
 --------------

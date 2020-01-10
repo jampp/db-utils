@@ -7,6 +7,8 @@ import hashlib
 import psycopg2
 import logging
 import re
+
+from six import moves
 from pygments import highlight
 from pygments.lexers import SqlLexer
 from pygments.formatters import Terminal256Formatter
@@ -267,11 +269,11 @@ class BaseCommand(object):
         :return: the option that the user selected
         """
         question += " [" + "/".join(valid_input_values) + "] "
-        current_input = raw_input(question)
+        current_input = moves.input(question)
         current_input = current_input.lower()
         while current_input not in valid_input_values:
             print("Invalid value. Choose %s" % "/".join(valid_input_values))
-            current_input = raw_input(question)
+            current_input = moves.input(question)
             current_input = current_input.lower()
 
         return current_input
