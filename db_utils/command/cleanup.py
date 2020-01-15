@@ -29,13 +29,13 @@ logger = getLogger(__name__)
 
 class CleanupCommand(BaseCommand):
     """
-    Used to delete any failed migration and/or update the MD5
+    Used to delete any failed migration and/or update the hash
     of any executed migration
     """
 
     def run(self):
         self._remove_failed()
-        self._update_md5()
+        self._update_hash()
 
     def _remove_failed(self):
         self.validate_migration_table_exists()
@@ -60,9 +60,9 @@ class CleanupCommand(BaseCommand):
                     self.execute_sql(cursor, DELETE_FAILED_MIGRATION, filename=filename)
         logger.info("Finish cleanup of failed migrations")
 
-    def _update_md5(self):
+    def _update_hash(self):
         """
-        Updates the md5 of any executed migration with the one of
+        Updates the hash of any executed migration with the one of
         the filesystem
 
         This SHOULD NOT happen but it is intended for very special cases,

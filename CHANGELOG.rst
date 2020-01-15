@@ -37,3 +37,5 @@ Technical Task
 * Added missing classifiers to setup.py
 * Create a version file
 * Format the code using black
+* Add make file to run tests and generate documentation
+* Solve typos and improve documentation
