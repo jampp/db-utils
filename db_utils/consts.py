@@ -69,11 +69,11 @@ This isn't going to do a rollback of the migration, just delete
 one row from the table.
 
 This is used during development to take into account that if the
-migration failed, you must re run the file but the database will
+migration failed, you must rerun the file but the database will
 be left on an invalid state
 
 Also, if a file was changed, it updates the hash of the file in
-the database. It won't re run the migration, just update the migration
+the database. It won't rerun the migration, just update the migration
 meta information
 
 NOTE: There is no way to identify if a migration is running of it
