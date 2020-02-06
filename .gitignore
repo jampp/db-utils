@@ -54,6 +54,7 @@ results.xml
 docs/_build/
 docs/doctrees/
 docs/html/
+docs/modules
 
 # Jupyter Notebook
 .ipynb_checkpoints

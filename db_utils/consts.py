@@ -13,7 +13,7 @@ MIGRATIONS_TABLENAME = "db_migrations"
 VALID_INPUT_VALUES = ("yes", "no")
 
 MAIN_PARSER_DESCRIPTION = """
-Used to setup or update the schema the Safiro DB Postgres Database.
+Used to setup or update the schema the Postgres Database.
 It only works with Postgres database (from 9.2 forward).
 
 It is important to take into account that once that the file is
@@ -34,10 +34,11 @@ the migrations.
 
 This is the first command that should be executed on the database
 to be able to mark all the files as already executed and start
-from there. But if you are starting with a new database created from
-the `schema.sql` file, then you don't want to mark all the files as
-marked. So you must use the `--just-base-schema` parameter to create
-the migration table and mark the min number of files as processed
+from there.
+
+If you don't want to mark all the files, use
+the `--just-base-schema` parameter to create the migration
+table and mark no file as processed.
 
 It is important to take into account that the executed date of
 the different files is going to be today, but fell free to update them.
@@ -68,8 +69,12 @@ This isn't going to do a rollback of the migration, just delete
 one row from the table.
 
 This is used during development to take into account that if the
-migration failed, you must re run the file but the database will
+migration failed, you must rerun the file but the database will
 be left on an invalid state
+
+Also, if a file was changed, it updates the hash of the file in
+the database. It won't rerun the migration, just update the migration's
+meta information
 
 NOTE: There is no way to identify if a migration is running of it
     failed, so make sure that when using this command the migration

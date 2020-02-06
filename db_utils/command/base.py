@@ -77,8 +77,8 @@ class BaseCommand(object):
         migration files. This is used to take into account if there is
         a documentation file (README.rst, etc...)
 
-    .. seealso: :mod:`db_utils.parsers` to get more information about
-        the other parameters
+    .. seealso: :func:`db_utils.parsers.add_common_arguments` to get more
+        information about the other parameters
     """
 
     def __init__(
@@ -122,7 +122,7 @@ class BaseCommand(object):
         """
         Make sure that the migrations table exists before running
         the command. This should be used to make sure that the
-        :class:`db_utils.command.initialize.Initialize` was executed
+        :class:`db_utils.command.initialize.InitializeCommand` was executed
         """
         with self.connection:
             with self.connection.cursor() as cursor:
