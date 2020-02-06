@@ -38,7 +38,7 @@ from there.
 
 If you don't want to mark all the files, use
 the `--just-base-schema` parameter to create the migration
-table and mark the min number of files as processed.
+table and mark no file as processed.
 
 It is important to take into account that the executed date of
 the different files is going to be today, but fell free to update them.
