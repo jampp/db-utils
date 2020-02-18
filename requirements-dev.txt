@@ -7,4 +7,4 @@ pytest==4.6.3
 pytest-cov==2.7.1
 pytest-runner==5.1
 flake8-assertive==1.1.0
-flake8-broken-line==0.1.0
+flake8-broken-line==0.1.0; python_version > '3.6'
