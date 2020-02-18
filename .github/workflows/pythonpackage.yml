@@ -37,6 +37,6 @@ jobs:
             pip install .
         - name: Run tests
           env:
-            MIGRATIONS_DB_TESTS=postgres://postgres@localhost/
+            MIGRATIONS_DB_TESTS: postgres://postgres@localhost/
           run: |
             pytest
