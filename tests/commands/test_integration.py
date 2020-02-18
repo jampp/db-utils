@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from .helper import BaseHelper, DB_URI, BASE_PATH
-from migratron import consts
-from migratron.main import main
-from migratron.command import base
+from db_utils import consts
+from db_utils.main import main
+from db_utils.command import base
 
 
 class CommandWorkflowTest(BaseHelper):

@@ -2,9 +2,9 @@
 
 
 from .helper import BaseHelper
-from migratron.consts import MIGRATIONS_TABLENAME
-from migratron.command.base import CHECK_TABLE_EXISTS
-from migratron.command.initialize import InitializeCommand
+from db_utils.consts import MIGRATIONS_TABLENAME
+from db_utils.command.base import CHECK_TABLE_EXISTS
+from db_utils.command.initialize import InitializeCommand
 
 
 class InitializeCommandTest(BaseHelper):

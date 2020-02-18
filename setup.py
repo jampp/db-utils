@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-with open(os.path.join(current_dir, "migratron", "VERSION"), "r") as vf:
+with open(os.path.join(current_dir, "db_utils", "VERSION"), "r") as vf:
     version = vf.read().strip()
 
 
@@ -22,7 +22,7 @@ def parse_requirements_txt(filename="requirements.txt"):
 
 
 setup(
-    name="migratron",
+    name="db-utils",
     version=version,
     description="Run the database migrations",
     author="Jampp",
@@ -34,7 +34,7 @@ setup(
             for req in parse_requirements_txt("requirements-dev.txt")
         ],
     },
-    entry_points={"console_scripts": {"migratron = migratron.main:main"}},
+    entry_points={"console_scripts": {"db-utils = db_utils.main:main"}},
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
@@ -55,7 +55,7 @@ setup(
     data_files=[
         (
             "",
-            ["migratron/VERSION", "requirements.txt", "LICENSE", "requirements-dev.txt"],
+            ["db_utils/VERSION", "requirements.txt", "LICENSE", "requirements-dev.txt"],
         )
     ],
     test_suite="tests",

@@ -3,8 +3,8 @@
 import os
 
 from .helper import BaseHelper
-from migratron.command.initialize import CREATE_TABLE_SQL
-from migratron.command.run_migration import RunMigrationCommand, ALL_MIGRATION_TYPES
+from db_utils.command.initialize import CREATE_TABLE_SQL
+from db_utils.command.run_migration import RunMigrationCommand, ALL_MIGRATION_TYPES
 
 
 class RunMigrationCommandTest(BaseHelper):

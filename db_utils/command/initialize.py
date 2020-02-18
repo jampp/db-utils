@@ -4,8 +4,8 @@ import os
 import getpass
 from datetime import datetime
 
-from migratron.consts import MIGRATIONS_TABLENAME
-from migratron.command.base import (
+from db_utils.consts import MIGRATIONS_TABLENAME
+from db_utils.command.base import (
     BaseCommand,
     INSERT_MIGRATION_DATA,
     UPDATE_MIGRATION_DATA,

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from migratron.parsers import create_command_line_parser
-from migratron.command.initialize import InitializeCommand
-from migratron.command.run_migration import RunMigrationCommand
-from migratron.command.cleanup import CleanupCommand
+from db_utils.parsers import create_command_line_parser
+from db_utils.command.initialize import InitializeCommand
+from db_utils.command.run_migration import RunMigrationCommand
+from db_utils.command.cleanup import CleanupCommand
 
 
 def main(args=None):
-    """ Entrypoint when you run `migratron` on the console
+    """ Entrypoint when you run `db-utils` on the console
     """
     parser = create_command_line_parser()
     parsed_args = parser.parse_args(args=args)

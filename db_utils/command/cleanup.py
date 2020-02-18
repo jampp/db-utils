@@ -5,8 +5,8 @@ from __future__ import print_function
 from logging import getLogger
 import os
 
-from migratron.consts import MIGRATIONS_TABLENAME
-from migratron.command.base import BaseCommand
+from db_utils.consts import MIGRATIONS_TABLENAME
+from db_utils.command.base import BaseCommand
 
 #: query used to get all the data of the already executed filenames
 DELETE_FAILED_MIGRATION = """
