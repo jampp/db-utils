@@ -5,8 +5,8 @@ import shutil
 import unittest
 from datetime import datetime
 
-from db_utils.consts import MIGRATIONS_TABLENAME
-from db_utils.command.base import (
+from migratron.consts import MIGRATIONS_TABLENAME
+from migratron.command.base import (
     INSERT_MIGRATION_DATA,
     UPDATE_MIGRATION_DATA,
     CHECK_TABLE_EXISTS,

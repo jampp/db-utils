@@ -3,8 +3,8 @@
 import os
 
 from .helper import BaseHelper
-from db_utils.command.cleanup import CleanupCommand
-from db_utils.command.initialize import CREATE_TABLE_SQL
+from migratron.command.cleanup import CleanupCommand
+from migratron.command.initialize import CREATE_TABLE_SQL
 
 
 class CleanupCommandTest(BaseHelper):

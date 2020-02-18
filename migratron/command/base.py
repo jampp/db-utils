@@ -13,7 +13,7 @@ from pygments import highlight
 from pygments.lexers import SqlLexer
 from pygments.formatters import Terminal256Formatter
 
-from db_utils.consts import MIGRATIONS_TABLENAME, VALID_INPUT_VALUES
+from migratron.consts import MIGRATIONS_TABLENAME, VALID_INPUT_VALUES
 
 
 #: query used to get all the data of the already executed filenames
@@ -77,7 +77,7 @@ class BaseCommand(object):
         migration files. This is used to take into account if there is
         a documentation file (README.rst, etc...)
 
-    .. seealso: :func:`db_utils.parsers.add_common_arguments` to get more
+    .. seealso: :func:`migratron.parsers.add_common_arguments` to get more
         information about the other parameters
     """
 
@@ -122,7 +122,7 @@ class BaseCommand(object):
         """
         Make sure that the migrations table exists before running
         the command. This should be used to make sure that the
-        :class:`db_utils.command.initialize.InitializeCommand` was executed
+        :class:`migratron.command.initialize.InitializeCommand` was executed
         """
         with self.connection:
             with self.connection.cursor() as cursor:

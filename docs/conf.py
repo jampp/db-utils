@@ -23,7 +23,7 @@ import sys
 
 conf_dir = os.path.dirname(__file__)
 conf_dir = os.path.dirname(__file__)
-code_dir = os.path.join(conf_dir, "..", "db_utils")
+code_dir = os.path.join(conf_dir, "..", "migratron")
 project_dir = os.path.join(conf_dir, "..")
 sys.path.insert(0, project_dir)
 
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "db_utils.tex", u"DB Utils", u"Jampp", "manual"),
+    (master_doc, "migratron.tex", u"DB Utils", u"Jampp", "manual"),
 ]
 
 
@@ -152,7 +152,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "db_utils", u"DB Utils Documentation", [author], 1)]
+man_pages = [(master_doc, "migratron", u"DB Utils Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------
@@ -166,7 +166,7 @@ texinfo_documents = [
         "DB Utils",
         u"DB Utils Documentation",
         author,
-        "db_utils",
+        "migratron",
         "Documentation on how to run database migrations.",
         "Miscellaneous",
     ),
