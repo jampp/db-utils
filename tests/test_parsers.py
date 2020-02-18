@@ -3,7 +3,7 @@
 import os
 import unittest
 
-from db_utils.parsers import create_command_line_parser
+from migratron.parsers import create_command_line_parser
 
 
 class ParsersTests(unittest.TestCase):

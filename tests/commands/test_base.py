@@ -4,7 +4,7 @@ import os
 import sys
 
 from .helper import BaseHelper
-from db_utils.command.base import BaseCommand
+from migratron.command.base import BaseCommand
 
 from contextlib import contextmanager
 

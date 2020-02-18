@@ -21,11 +21,11 @@ executed it MUST not be updated because it won't be executed again.
 
 To see more information, on the subcommand and parameters do:
 
-    db-utils SUBCOMMAND --help
+    migratron SUBCOMMAND --help
 
 For example:
 
-    db-utils initialize --help
+    migratron initialize --help
 """
 
 INITIALIZE_PARSER_DESCRIPTION = """
