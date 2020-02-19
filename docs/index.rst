@@ -1,5 +1,5 @@
 ====================================
-Welcome to Migratrong documentation!
+Welcome to Migratron documentation!
 ====================================
 
 .. include:: readme.rst
