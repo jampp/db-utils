@@ -39,3 +39,4 @@ Technical Task
 * Format the code using black
 * Add Makefile to run tests and generate documentation
 * Solve typos and improve documentation
+* Fix min required version for some dev dependencies
