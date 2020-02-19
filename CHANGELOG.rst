@@ -22,6 +22,11 @@ Added
 * The project can be used on Python3
 * Description to the README.rst
 
+Changed
+-------
+
+* Rename the package to migratron
+
 Bugfixes
 --------
 

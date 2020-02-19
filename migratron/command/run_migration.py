@@ -8,7 +8,7 @@ import subprocess
 from logging import getLogger
 from datetime import datetime
 
-from db_utils.command.base import (
+from migratron.command.base import (
     BaseCommand,
     INSERT_MIGRATION_DATA,
     UPDATE_MIGRATION_DATA,
@@ -27,7 +27,7 @@ class RunMigrationCommand(BaseCommand):
     Run the missing SQL files to update the schema of the
     database.
 
-    :seealso: Check :mod:`db_utils.parsers` to get additional information
+    :seealso: Check :mod:`migratron.parsers` to get additional information
         about the other parameters
     """
 

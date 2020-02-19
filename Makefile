@@ -52,7 +52,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 db_utils tests
+	flake8 migratron tests
 
 test: ## run tests quickly with the default Python
 	py.test
@@ -61,12 +61,12 @@ test-jenkins: ## run the test and generate the Jenkins report
 	py.test --junitxml results.xml
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source db_utils -m pytest
+	coverage run --source migratron -m pytest
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/db_utils.rst
+	rm -f docs/migratron.rst
 	rm -rf docs/modules
-	sphinx-apidoc -o docs/modules db_utils
+	sphinx-apidoc -o docs/modules migratron
 	$(MAKE) -C docs -e clean
 	$(MAKE) -C docs -e html
 

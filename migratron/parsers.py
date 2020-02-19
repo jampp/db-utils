@@ -4,14 +4,14 @@ import os
 import argparse
 from pygments.styles import get_all_styles
 
-from db_utils import __version__
-from db_utils.consts import (
+from migratron import __version__
+from migratron.consts import (
     MAIN_PARSER_DESCRIPTION,
     INITIALIZE_PARSER_DESCRIPTION,
     MIGRATE_PARSER_DESCRIPTION,
     CLEANUP_PARSER_DESCRIPTION,
 )
-from db_utils.command.run_migration import ALL_MIGRATION_TYPES
+from migratron.command.run_migration import ALL_MIGRATION_TYPES
 
 
 def create_command_line_parser():
