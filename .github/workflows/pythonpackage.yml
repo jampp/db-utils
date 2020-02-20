@@ -43,10 +43,7 @@ jobs:
         - name: Create Dist packages
           run: |
             make dist
-        - name: Publish distribution package to Test PyPI
-          env:
-            TWINE_USERNAME: __token__
-            TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
-            TWINE_PASSWORD: ${{ secrets.test_pypi_password }}
-          run:
-            twine upload dist/* --verbose
+        - name: Archive production artifacts
+          uses: actions/upload-artifact@v1
+          with:
+            path: dist/*
