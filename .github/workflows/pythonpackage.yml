@@ -44,7 +44,9 @@ jobs:
           run: |
             make dist
         - name: Publish distribution package to Test PyPI
-          uses: pypa/gh-action-pypi-publish@master
-          with:
-            password: ${{ secrets.test_pypi_password }}
-            repository_url: https://test.pypi.org/legacy/
+          env:
+            TWINE_USERNAME: __token__
+            TWINE_REPOSITORY_URL: https://test.pypi.org/legacy/
+            TWINE_PASSWORD: ${{ secrets.test_pypi_password }}
+          run:
+            twine upload dist/*
