@@ -63,7 +63,14 @@ setup(
     data_files=[
         (
             "",
-            ["migratron/VERSION", "requirements.txt", "LICENSE", "requirements-dev.txt"],
+            [
+                "migratron/VERSION",
+                "requirements.txt",
+                "LICENSE",
+                "requirements-dev.txt",
+                "README.rst",
+                "CHANGELOG.rst",
+            ],
         )
     ],
     test_suite="tests",
