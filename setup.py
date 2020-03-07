@@ -8,6 +8,12 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(current_dir, "migratron", "VERSION"), "r") as vf:
     version = vf.read().strip()
 
+with open(os.path.join(current_dir, "README.rst")) as readme_file:
+    readme = readme_file.read()
+
+with open(os.path.join(current_dir, "CHANGELOG.rst")) as history_file:
+    history = history_file.read()
+
 
 def parse_requirements_txt(filename="requirements.txt"):
     with open(os.path.join(current_dir, filename)) as requirements_file:
@@ -25,6 +31,8 @@ setup(
     name="migratron",
     version=version,
     description="Run the database migrations",
+    long_description=readme + "\n\n" + history,
+    long_description_content_type="text/x-rst",
     author="Jampp",
     install_requires=parse_requirements_txt(),
     extras_require={

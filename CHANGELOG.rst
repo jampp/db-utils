@@ -12,7 +12,16 @@ bugs with user-visible outcomes.
 When major components get significant changes worthy of mention, they
 can be described in a Major section.
 
-v1.1.0 - Unreleased
+v1.1.1 - Unreleased
+===================
+
+Bugfixes
+--------
+
+* Added long description to the setup.py
+
+
+v1.1.0 - 2020-03-03
 ===================
 
 Added
