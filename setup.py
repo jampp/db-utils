@@ -1,42 +1,44 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
+
 from setuptools import setup, find_packages
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
 
-with open(os.path.join(current_dir, "migratron", "VERSION"), "r") as vf:
+cmd_class = {}
+setup_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(setup_dir, "README.rst")) as readme_file:
+    readme = readme_file.read()
+
+with open(os.path.join(setup_dir, "CHANGELOG.rst")) as history_file:
+    history = history_file.read()
+
+with open(os.path.join(setup_dir, "migratron", "VERSION")) as vf:
     version = vf.read().strip()
-
-
-def parse_requirements_txt(filename="requirements.txt"):
-    with open(os.path.join(current_dir, filename)) as requirements_file:
-        requirements = requirements_file.readlines()
-        # remove whitespaces
-        requirements = [line.strip().replace(" ", "") for line in requirements]
-        # remove all the requirements that are comments
-        requirements = [line for line in requirements if not line.startswith("#")]
-        # remove empty lines
-        requirements = list(filter(None, requirements))
-        return requirements
 
 
 setup(
     name="migratron",
-    version=version,
     description="Run the database migrations",
+    version=version,
     author="Jampp",
-    install_requires=parse_requirements_txt(),
-    extras_require={
-        "dev-strict": parse_requirements_txt("requirements-dev.txt"),
-        "dev": [
-            req.replace("==", ">=")
-            for req in parse_requirements_txt("requirements-dev.txt")
-        ],
-    },
-    entry_points={"console_scripts": {"migratron = migratron.main:main"}},
+    author_email="tech@jampp.com",
+    classifiers=["License :: OSI Approved :: GNU General Public License v3 (GPLv3)",],
+    # this should include the same requirements as requirements.txt
+    # but without the fixed version. For more info check
+    # https://packaging.python.org/discussions/install-requires-vs-requirements/
+    install_requires=[
+        "pygments",
+        "psycopg2",
+    ],
+    license="BSD 3-Clause",
+    long_description=readme + "\n\n" + history,
+    long_description_content_type="text/x-rst",
+    package_data={"migratron": ["VERSION"],},
     packages=find_packages(),
-    include_package_data=True,
+    test_suite="tests",
+    url="https://github.com/jampp/migratron",
     zip_safe=False,
     classifiers=[
         "Development Status :: 6 - Mature",
@@ -51,12 +53,4 @@ setup(
         "Topic :: Database",
         "Topic :: Software Development",
     ],
-    license="BSD 3-Clause",
-    data_files=[
-        (
-            "",
-            ["migratron/VERSION", "requirements.txt", "LICENSE", "requirements-dev.txt"],
-        )
-    ],
-    test_suite="tests",
 )
