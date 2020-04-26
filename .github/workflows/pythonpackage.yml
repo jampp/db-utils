@@ -42,7 +42,7 @@ jobs:
             pytest
         - name: Bump the release candidate version
           run: |
-              echo 'rc$GITHUB_RUN_NUMBER' >> migratron/VERSION
+              echo rc$GITHUB_RUN_NUMBER >> migratron/VERSION
         - name: Create Dist packages
           run: |
             make dist
