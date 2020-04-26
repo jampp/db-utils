@@ -40,14 +40,12 @@ jobs:
             MIGRATIONS_DB_TESTS: postgres://postgres@localhost/
           run: |
             pytest
+        - name: Bump the release candidate version
+          run: |
+              echo 'rc$GITHUB_RUN_NUMBER' >> migratron/VERSION
         - name: Create Dist packages
           run: |
             make dist
-        - name: Archive production artifacts
-          uses: actions/upload-artifact@v1
-          with:
-            name: dist
-            path: dist
         - name: Publish distribution package to Test PyPI
           env:
             TWINE_USERNAME: __token__
