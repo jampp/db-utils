@@ -24,7 +24,6 @@ setup(
     version=version,
     author="Jampp",
     author_email="tech@jampp.com",
-    classifiers=["License :: OSI Approved :: GNU General Public License v3 (GPLv3)",],
     # this should include the same requirements as requirements.txt
     # but without the fixed version. For more info check
     # https://packaging.python.org/discussions/install-requires-vs-requirements/
