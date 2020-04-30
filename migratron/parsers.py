@@ -20,6 +20,7 @@ def create_command_line_parser():
     """
     parser = create_main_parser()
     subparser = parser.add_subparsers(dest="subparser_name")
+    subparser.required = True
     create_initialize_parser(subparser)
     create_run_migration_parser(subparser)
     create_cleanup(subparser)
