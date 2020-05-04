@@ -61,8 +61,8 @@ source_suffix = [".rst", ".md"]
 master_doc = "index"
 
 # General information about the project.
-project = u"DB Utils"
-copyright = u"2019, Jampp"
+project = u"Migratron"
+copyright = u"2020, Jampp"
 author = u"Jampp"
 
 # The version info for the project you're documenting, acts as replacement
