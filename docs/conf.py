@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "migratron.tex", u"DB Utils", u"Jampp", "manual"),
+    (master_doc, "migratron.tex", u"Migratron", u"Jampp", "manual"),
 ]
 
 
@@ -152,7 +152,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "migratron", u"DB Utils Documentation", [author], 1)]
+man_pages = [(master_doc, "migratron", u"Migratron Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------
@@ -163,8 +163,8 @@ man_pages = [(master_doc, "migratron", u"DB Utils Documentation", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "DB Utils",
-        u"DB Utils Documentation",
+        "Migratron",
+        u"Migratron Documentation",
         author,
         "migratron",
         "Documentation on how to run database migrations.",
