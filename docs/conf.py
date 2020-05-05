@@ -61,8 +61,8 @@ source_suffix = [".rst", ".md"]
 master_doc = "index"
 
 # General information about the project.
-project = u"DB Utils"
-copyright = u"2019, Jampp"
+project = u"Migratron"
+copyright = u"2020, Jampp"
 author = u"Jampp"
 
 # The version info for the project you're documenting, acts as replacement
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "migratron.tex", u"DB Utils", u"Jampp", "manual"),
+    (master_doc, "migratron.tex", u"Migratron", u"Jampp", "manual"),
 ]
 
 
@@ -152,7 +152,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "migratron", u"DB Utils Documentation", [author], 1)]
+man_pages = [(master_doc, "migratron", u"Migratron Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------
@@ -163,8 +163,8 @@ man_pages = [(master_doc, "migratron", u"DB Utils Documentation", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "DB Utils",
-        u"DB Utils Documentation",
+        "Migratron",
+        u"Migratron Documentation",
         author,
         "migratron",
         "Documentation on how to run database migrations.",
