@@ -5,6 +5,7 @@ from __future__ import print_function
 import os
 import getpass
 import subprocess
+import shlex
 from logging import getLogger
 from datetime import datetime
 
@@ -32,15 +33,21 @@ class RunMigrationCommand(BaseCommand):
     """
 
     def __init__(
-        self, migration_type, just_list_files, psql_additional_options, *args, **kwargs
+        self, migration_type, database_type, database_uri, just_list_files, additional_options, *args, **kwargs
     ):
         super(RunMigrationCommand, self).__init__(*args, **kwargs)
         self.migration_type = migration_type
-        self.psql_additional_options = psql_additional_options
+        self.additional_options = additional_options
         self.just_list_files = just_list_files
+        self.database_uri = database_uri
+        self.database_type = database_type
 
     def run(self):
         self.validate_migration_table_exists()
+        if self.database_type in ("hive", "presto"):
+            if not self.database_uri:
+                raise Exception("You must specify the database uri")
+
         existing_filenames = self.get_filesystem_migrations()
         already_executed_data = self.get_executed_migrations()
         files_to_execute = []
@@ -199,20 +206,48 @@ class RunMigrationCommand(BaseCommand):
             self.print_sql(file_content)
             return
 
-        psql_command = [
-            "psql",
-            "--quiet",
-            "--no-psqlrc",
-            "-v",
-            "ON_ERROR_STOP=1",
-            "-f",
-            complete_filename,
-        ]
-        if self.psql_additional_options:
-            psql_command += ["--%s" % option for option in self.psql_additional_options]
+        command = None
+        if self.database_type == "postgresql":
+            command = [
+                "psql",
+                "--quiet",
+                "--no-psqlrc",
+                "-v",
+                "ON_ERROR_STOP=1",
+                "-f",
+                complete_filename,
+            ]
+            if self.database_uri or self.db_uri:
+                command += [self.database_uri or self.db_uri]
+        elif self.database_type == "hive":
+            command = [
+                "beeline",
+                "-u",
+                self.database_uri,
+                "-f",
+                complete_filename
+            ]
+
+        elif self.database_type == "presto":
+            command = [
+                "presto-cli",
+                "--server",
+                self.database_uri,
+                "-f",
+                complete_filename
+            ]
+
+        if self.additional_options:
+            parsed_additional_options = shlex.split(self.additional_options)
+            for option, value in parsed_additional_options.items():
+                if isinstance(value, bool):
+                    # in this case it was just a flag (-h for example)
+                    command += [option]
+                else:
+                    command += [option, value]
 
         try:
-            subprocess.check_call(psql_command + [self.db_uri])
+            subprocess.check_call(command)
         except Exception:
             logger.exception("Error while running the migration: %s", complete_filename)
             raise

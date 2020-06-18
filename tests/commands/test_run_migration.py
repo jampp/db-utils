@@ -13,7 +13,9 @@ class RunMigrationCommandTest(BaseHelper):
         self.command = RunMigrationCommand(
             migration_type=ALL_MIGRATION_TYPES,
             just_list_files=False,
-            psql_additional_options=None,
+            additional_options=None,
+            database_type="postgresql",
+            database_uri=None,
             **self.BASE_ARGS
         )
         with self.command.connection as connection:

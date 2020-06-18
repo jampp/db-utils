@@ -61,6 +61,12 @@ This will work as follows:
 
 - It will execute the migration
 
+Based on the migration type, it will need external commands to run
+the migration:
+
+- psql for a PostgreSQL
+- beeline for Hive
+- presto-cli for Presto
 """
 
 CLEANUP_PARSER_DESCRIPTION = """
