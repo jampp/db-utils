@@ -26,10 +26,7 @@ setup(
     # this should include the same requirements as requirements.txt
     # but without the fixed version. For more info check
     # https://packaging.python.org/discussions/install-requires-vs-requirements/
-    install_requires=[
-        "pygments",
-        "psycopg2",
-    ],
+    install_requires=["pygments", "psycopg2",],
     license="BSD 3-Clause",
     long_description=readme + "\n\n" + history,
     long_description_content_type="text/x-rst",
