@@ -6,7 +6,6 @@ import os
 from setuptools import setup, find_packages
 
 
-cmd_class = {}
 setup_dir = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(setup_dir, "README.rst")) as readme_file:
     readme = readme_file.read()
@@ -14,8 +13,8 @@ with open(os.path.join(setup_dir, "README.rst")) as readme_file:
 with open(os.path.join(setup_dir, "CHANGELOG.rst")) as history_file:
     history = history_file.read()
 
-with open(os.path.join(setup_dir, "migratron", "VERSION")) as vf:
-    version = vf.read().strip()
+with open(os.path.join(setup_dir, "migratron", "VERSION")) as version_file:
+    version = version_file.read().strip()
 
 
 setup(
