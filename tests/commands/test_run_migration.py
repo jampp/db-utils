@@ -1,29 +1,36 @@
 # -*- coding: utf-8 -*-
 
 import os
+import subprocess
+import unittest
 
-from .helper import BaseHelper
+from .helper import BaseHelper, invalid_dbname
 from migratron.command.initialize import CREATE_TABLE_SQL
 from migratron.command.run_migration import RunMigrationCommand, ALL_MIGRATION_TYPES
 
 
-class RunMigrationCommandTest(BaseHelper):
+class BaseRunMigration(BaseHelper):
+    """ Abstract class used to test the migrate command with different dbs
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        if cls is BaseRunMigration:
+            raise unittest.SkipTest("Abstract class")
+        super(BaseRunMigration, cls).setUpClass()
+
     def setUp(self):
-        super(RunMigrationCommandTest, self).setUp()
-        self.command = RunMigrationCommand(
-            migration_type=ALL_MIGRATION_TYPES,
-            just_list_files=False,
-            additional_options=None,
-            database_type="postgresql",
-            database_uri=None,
-            **self.BASE_ARGS
-        )
-        self.command.database_uri = self.command.state_db_uri
+        super(BaseRunMigration, self).setUp()
+        self.command = self.create_command()
+
         with self.command.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(CREATE_TABLE_SQL)
 
-    def test_no_migrations(self):
+    def create_command(self):
+        pass
+
+    def _test_no_migrations(self):
         self.command.run()
         self.assertEqual(self._get_executed_migrations(), [])
 
@@ -46,7 +53,7 @@ class RunMigrationCommandTest(BaseHelper):
         self._create_migration_files()
         file_path = os.path.join(self.migrations_path, self.valid_filenames[0])
         with open(file_path, "w") as f:
-            f.write("SELECT 1 / 0;")
+            f.write("SELECT * FROM foobar2; \n")
 
         with self.assertRaises(Exception):
             self.command.run()
@@ -61,3 +68,62 @@ class RunMigrationCommandTest(BaseHelper):
         self.assertEqual(self._get_executed_migrations(), [self.valid_filenames[0]])
         self.assertFalse(self._check_table_exist("t1"))
         self.assertTrue(self._check_table_exist("t0"))
+
+
+class PostgresRunMigrationTest(BaseRunMigration):
+
+    def create_command(self):
+        command = RunMigrationCommand(
+            migration_type=ALL_MIGRATION_TYPES,
+            just_list_files=False,
+            additional_options=None,
+            database_type="postgresql",
+            database_uri=None,
+            **self.BASE_ARGS
+        )
+        command.database_uri = command.state_db_uri
+        return command
+
+    def _check_table_exist(self, table_name):
+        return super(PostgresRunMigrationTest, self)._check_table_exist(table_name)
+
+
+@unittest.skipIf(
+    invalid_dbname("MIGRATIONS_HIVE_TESTS"),
+    "Skip because not using hive test database"
+)
+class HiveRunMigrationTest(BaseRunMigration):
+
+    def create_command(self):
+        command = RunMigrationCommand(
+            migration_type=ALL_MIGRATION_TYPES,
+            just_list_files=False,
+            additional_options=None,
+            database_type="hive",
+            database_uri=os.getenv("MIGRATIONS_HIVE_TESTS"),
+            **self.BASE_ARGS
+        )
+        return command
+
+    def _check_table_exist(self, table_name):
+        command = [
+            "beeline",
+            "-u",
+            self.command.database_uri,
+            "-e",
+            "SHOW TABLES LIKE '%s'" % table_name
+        ]
+        output = subprocess.check_output(command)
+        return table_name in output.decode('utf-8')
+
+    def _drop_tables(self):
+        for table_name in ['t0', 't1']:
+            command = [
+                "beeline",
+                "-u",
+                self.command.database_uri,
+                "-e",
+                "DROP TABLE IF EXISTS %s" % table_name
+            ]
+            subprocess.check_call(command)
+
