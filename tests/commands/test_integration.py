@@ -22,7 +22,7 @@ class CommandWorkflowTest(BaseHelper):
         main(
             [
                 "initialize",
-                "--db-uri",
+                "--state-db-uri",
                 DB_URI,
                 "--just-base-schema",
                 "--batch-mode",
@@ -41,7 +41,9 @@ class CommandWorkflowTest(BaseHelper):
         main(
             [
                 "migrate",
-                "--db-uri",
+                "--state-db-uri",
+                DB_URI,
+                "--database-uri",
                 DB_URI,
                 "--migration-type",
                 "any",
@@ -59,7 +61,7 @@ class CommandWorkflowTest(BaseHelper):
         main(
             [
                 "initialize",
-                "--db-uri",
+                "--state-db-uri",
                 DB_URI,
                 "--batch-mode",
                 "--migrations-path",
@@ -84,7 +86,9 @@ class CommandWorkflowTest(BaseHelper):
             main(
                 [
                     "migrate",
-                    "--db-uri",
+                    "--state-db-uri",
+                    DB_URI,
+                    "--database-uri",
                     DB_URI,
                     "--migration-type",
                     "any",
@@ -97,7 +101,7 @@ class CommandWorkflowTest(BaseHelper):
         main(
             [
                 "cleanup",
-                "--db-uri",
+                "--state-db-uri",
                 DB_URI,
                 "--batch-mode",
                 "--migrations-path",
@@ -108,7 +112,9 @@ class CommandWorkflowTest(BaseHelper):
         main(
             [
                 "migrate",
-                "--db-uri",
+                "--state-db-uri",
+                DB_URI,
+                "--database-uri",
                 DB_URI,
                 "--migration-type",
                 "any",

@@ -217,8 +217,8 @@ class RunMigrationCommand(BaseCommand):
                 "-f",
                 complete_filename,
             ]
-            if self.database_uri or self.db_uri:
-                command += [self.database_uri or self.db_uri]
+            if self.database_uri:
+                command += [self.database_uri]
         elif self.database_type == "hive":
             command = [
                 "beeline",

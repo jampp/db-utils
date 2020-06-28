@@ -18,6 +18,7 @@ class RunMigrationCommandTest(BaseHelper):
             database_uri=None,
             **self.BASE_ARGS
         )
+        self.command.database_uri = self.command.state_db_uri
         with self.command.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(CREATE_TABLE_SQL)

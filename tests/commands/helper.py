@@ -24,10 +24,10 @@ def invalid_dbname():
         return False
 
     db_name = DB_URI.split("/")[-1]
-    if "mat" in db_name:
-        return True
+    if "test" in db_name:
+        return False
 
-    return False
+    return True
 
 
 @unittest.skipIf(not DB_URI, "Skip because no database was used")
@@ -43,7 +43,7 @@ class BaseHelper(unittest.TestCase):
 
     BASE_ARGS = dict(
         migrations_path=BASE_PATH,
-        db_uri=DB_URI,
+        state_db_uri=DB_URI,
         use_colors=False,
         dry_run=False,
         batch_mode=True,
