@@ -236,6 +236,8 @@ class RunMigrationCommand(BaseCommand):
                 "-f",
                 complete_filename
             ]
+        else:
+            raise ValueError("Invalid database type")
 
         if self.additional_options:
             parsed_additional_options = shlex.split(self.additional_options)
