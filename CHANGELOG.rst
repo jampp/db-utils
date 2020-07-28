@@ -12,7 +12,17 @@ bugs with user-visible outcomes.
 When major components get significant changes worthy of mention, they
 can be described in a Major section.
 
-v1.1.0 - Unreleased
+v1.2.0 - Unreleased
+===================
+
+Technical Tasks
+---------------
+
+* Added long description to the setup.py
+* Setup.py doesn't parse the requirement.txt file
+* Use MANIFEST.ini to add non python files to the package
+
+v1.1.0 - 2020-03-03
 ===================
 
 Added
