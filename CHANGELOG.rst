@@ -47,3 +47,5 @@ Technical Task
 * Solve typos and improve documentation
 * Fix min required version for some dev dependencies
 * Added readthedocs configuration file
+* Added long description to the setup.py
+* Use MANIFEST.ini to add non python files to the package<Paste>
