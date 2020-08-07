@@ -12,12 +12,13 @@ bugs with user-visible outcomes.
 When major components get significant changes worthy of mention, they
 can be described in a Major section.
 
-v1.1.0 - Unreleased
+v2.0.0 - Unreleased
 ===================
 
 Added
 -----
 
+* Options to run the migration against Hive or Presto
 * Created the documentation
 * The project can be used on Python3
 * Description to the README.rst

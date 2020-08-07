@@ -19,19 +19,19 @@ BASE_PATH = "/tmp/testing-dbutils"
 DB_URI = os.getenv("MIGRATIONS_DB_TESTS")
 
 
-def invalid_dbname():
-    if not DB_URI:
-        return False
-
-    db_name = DB_URI.split("/")[-1]
-    if "mat" in db_name:
+def invalid_dbname(environ_key):
+    environ_value = os.getenv(environ_key)
+    if not environ_value:
         return True
 
-    return False
+    db_name = environ_value.split("/")[-1]
+    if "test" in db_name:
+        return False
+
+    return True
 
 
-@unittest.skipIf(not DB_URI, "Skip because no database was used")
-@unittest.skipIf(invalid_dbname(), "Skip because using mat databases")
+@unittest.skipIf(invalid_dbname("MIGRATIONS_DB_TESTS"), "Skip because not using test database")
 class BaseHelper(unittest.TestCase):
     """
     Base helper that is going to have some common functions for all
@@ -43,7 +43,7 @@ class BaseHelper(unittest.TestCase):
 
     BASE_ARGS = dict(
         migrations_path=BASE_PATH,
-        db_uri=DB_URI,
+        state_db_uri=DB_URI,
         use_colors=False,
         dry_run=False,
         batch_mode=True,
@@ -64,6 +64,12 @@ class BaseHelper(unittest.TestCase):
         with self.command.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute("DROP TABLE IF EXISTS %s" % MIGRATIONS_TABLENAME)
+
+        self._drop_tables()
+
+    def _drop_tables(self):
+        with self.command.connection as connection:
+            with connection.cursor() as cursor:
                 cursor.execute("DROP TABLE IF EXISTS t0")
                 cursor.execute("DROP TABLE IF EXISTS t1")
 
@@ -74,7 +80,7 @@ class BaseHelper(unittest.TestCase):
         for index, filename in enumerate(self.valid_filenames):
             file_path = os.path.join(self.migrations_path, filename)
             with open(file_path, "w") as f:
-                f.write("CREATE TABLE t%s (id INTEGER)" % index)
+                f.write("CREATE TABLE t%s (id INTEGER);\n" % index)
 
     def _check_table_exist(self, table_name):
         with self.command.connection as connection:

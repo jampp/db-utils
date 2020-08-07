@@ -83,7 +83,7 @@ class BaseCommand(object):
 
     def __init__(
         self,
-        db_uri,
+        state_db_uri,
         use_colors,
         dry_run,
         batch_mode,
@@ -93,7 +93,7 @@ class BaseCommand(object):
         files_extension="sql",
     ):
 
-        self.db_uri = db_uri
+        self.state_db_uri = state_db_uri
         self.use_colors = use_colors
         self.dry_run = dry_run
         self.batch_mode = batch_mode
@@ -106,7 +106,7 @@ class BaseCommand(object):
         self._configure_logging(logging_level)
 
     def _create_connection(self):
-        return psycopg2.connect(self.db_uri)
+        return psycopg2.connect(self.state_db_uri)
 
     def _configure_logging(self, logging_level):
         logging.basicConfig(level=getattr(logging, logging_level))

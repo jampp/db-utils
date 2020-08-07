@@ -85,6 +85,25 @@ def create_run_migration_parser(subparser):
         ),
     )
     migrate_parser.add_argument(
+        "--database-type",
+        choices=("postgresql", "hive", "presto"),
+        required=False,
+        default="postgresql",
+        help=(
+            "Inidicate the type of database on which the migration should be executed."
+        ),
+    )
+    migrate_parser.add_argument(
+        "--database-uri",
+        required=False,
+        help=(
+            "The URL of the database on which the migrations are going to be executed. "
+            "As with the ``state-db-uri``, when using Postgres it supports the "
+            "Postgres environment variables. But for the other databases this value "
+            "is required"
+        ),
+    )
+    migrate_parser.add_argument(
         "--just-list-files",
         action="store_true",
         help=(
@@ -93,18 +112,16 @@ def create_run_migration_parser(subparser):
         ),
     )
     migrate_parser.add_argument(
-        "--psql-additional-options",
+        "--additional-options",
         required=False,
         nargs="*",
         help=(
-            "When running the psql to run the command, the additional "
-            "options that should be used on the psql command (without the --). "
-            "It must be the complete name of the option not the -s or things "
-            "like that but the complete name For example: "
-            '--psql-additional-options "single-step" "single-transaction"'
+            "When running the psql, beeline or presto-cli to run the command, the additional "
+            "options that should be used on the command (with the --). "
+            '--additional-options "--single-step single-transaction" or'
+            '--additional-options "--catalog hive --schema foobar --user foo"'
         ),
     )
-
     add_common_arguments(migrate_parser)
 
 
@@ -126,7 +143,7 @@ def add_common_arguments(parser):
     Add the common parameters to the parser
     """
     parser.add_argument(
-        "--db-uri",
+        "--state-db-uri",
         required=False,
         default="",
         help=(
@@ -134,7 +151,8 @@ def add_common_arguments(parser):
             "of the format: postgres://username:password@host:port/dbname. If "
             "not used then it will use the environment variables to "
             "connect to the database ( "
-            "https://www.postgresql.org/docs/current/static/libpq-envars.html)"
+            "https://www.postgresql.org/docs/current/static/libpq-envars.html). "
+            "This is the database that has the status of the executed migrations "
         ),
     )
     parser.add_argument(
