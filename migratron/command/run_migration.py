@@ -33,19 +33,19 @@ class RunMigrationCommand(BaseCommand):
     """
 
     def __init__(
-        self, migration_type, database_type, database_uri, just_list_files, additional_options, *args, **kwargs
+        self, migration_type, db_type, db_uri, just_list_files, additional_options, *args, **kwargs
     ):
         super(RunMigrationCommand, self).__init__(*args, **kwargs)
         self.migration_type = migration_type
         self.additional_options = additional_options
         self.just_list_files = just_list_files
-        self.database_uri = database_uri
-        self.database_type = database_type
+        self.db_uri = db_uri
+        self.db_type = db_type
 
     def run(self):
         self.validate_migration_table_exists()
-        if self.database_type in ("hive", "presto"):
-            if not self.database_uri:
+        if self.db_type in ("hive", "presto"):
+            if not self.db_uri:
                 raise Exception("You must specify the database uri")
 
         existing_filenames = self.get_filesystem_migrations()
@@ -207,7 +207,7 @@ class RunMigrationCommand(BaseCommand):
             return
 
         command = None
-        if self.database_type == "postgresql":
+        if self.db_type == "postgresql":
             command = [
                 "psql",
                 "--quiet",
@@ -217,22 +217,22 @@ class RunMigrationCommand(BaseCommand):
                 "-f",
                 complete_filename,
             ]
-            if self.database_uri:
-                command += [self.database_uri]
-        elif self.database_type == "hive":
+            if self.db_uri:
+                command += [self.db_uri]
+        elif self.db_type == "hive":
             command = [
                 "beeline",
                 "-u",
-                self.database_uri,
+                self.db_uri,
                 "-f",
                 complete_filename
             ]
 
-        elif self.database_type == "presto":
+        elif self.db_type == "presto":
             command = [
                 "presto-cli",
                 "--server",
-                self.database_uri,
+                self.db_uri,
                 "-f",
                 complete_filename
             ]

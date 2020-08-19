@@ -85,7 +85,7 @@ def create_run_migration_parser(subparser):
         ),
     )
     migrate_parser.add_argument(
-        "--database-type",
+        "--db-type",
         choices=("postgresql", "hive", "presto"),
         required=False,
         default="postgresql",
@@ -94,7 +94,7 @@ def create_run_migration_parser(subparser):
         ),
     )
     migrate_parser.add_argument(
-        "--database-uri",
+        "--db-uri",
         required=False,
         help=(
             "The URL of the database on which the migrations are going to be executed. "

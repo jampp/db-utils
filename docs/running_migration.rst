@@ -63,13 +63,13 @@ Connect to the Database
 .. note::
 
     When using Postgres, the recommeded option is that the
-    ``database-uri`` and ``state-db-uri`` reference the same database
+    ``db-uri`` and ``state-db-uri`` reference the same database
 
 There is more than one way that ``migratron`` can connect to the
 PostgreSQL database:
 
 - The PostgreSQL environment variables
-- Specifing the ``database-uri`` argument
+- Specifing the ``db-uri`` argument
 
 In both cases, you can read more information about this using the ``--help``
 parameter. For example:
@@ -79,13 +79,13 @@ parameter. For example:
     migratron migrate --help
 
 
-For other Hive and PrestoDB, the ``database-uri`` argument is required because
+For other Hive and PrestoDB, the ``db-uri`` argument is required because
 there is no way to use the environment variables. For example, when using Hive,
 you should use something like:
 
 .. code-block:: console
 
     migratron migrate \
-        --database-uri 'jdbc:hive2://localhost:10000/test' \
-        --database-type hive \
+        --db-uri 'jdbc:hive2://localhost:10000/test' \
+        --db-type hive \
         --state-db-uri postgres://foo:bar@localhost/test1'

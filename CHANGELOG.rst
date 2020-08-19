@@ -27,6 +27,7 @@ Changed
 -------
 
 * Rename the package to migratron
+* Changed the ``--database-uri|type`` parameters to ``--db-uri|type``
 
 Bugfixes
 --------

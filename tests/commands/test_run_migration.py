@@ -77,11 +77,11 @@ class PostgresRunMigrationTest(BaseRunMigration):
             migration_type=ALL_MIGRATION_TYPES,
             just_list_files=False,
             additional_options=None,
-            database_type="postgresql",
-            database_uri=None,
+            db_type="postgresql",
+            db_uri=None,
             **self.BASE_ARGS
         )
-        command.database_uri = command.state_db_uri
+        command.db_uri = command.state_db_uri
         return command
 
     def _check_table_exist(self, table_name):
@@ -99,8 +99,8 @@ class HiveRunMigrationTest(BaseRunMigration):
             migration_type=ALL_MIGRATION_TYPES,
             just_list_files=False,
             additional_options=None,
-            database_type="hive",
-            database_uri=os.getenv("MIGRATIONS_HIVE_TESTS"),
+            db_type="hive",
+            db_uri=os.getenv("MIGRATIONS_HIVE_TESTS"),
             **self.BASE_ARGS
         )
         return command
@@ -126,4 +126,3 @@ class HiveRunMigrationTest(BaseRunMigration):
                 "DROP TABLE IF EXISTS %s" % table_name
             ]
             subprocess.check_call(command)
-
