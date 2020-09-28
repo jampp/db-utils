@@ -12,7 +12,15 @@ bugs with user-visible outcomes.
 When major components get significant changes worthy of mention, they
 can be described in a Major section.
 
-v2.0.0 - Unreleased
+v2.0.1 - Unreleased
+===================
+
+Bugfixes
+--------
+
+* Added VERSION file to the python package
+
+v2.0.0 - 2020-08-28
 ===================
 
 Added
