@@ -47,7 +47,7 @@ def create_initialize_parser(subparser):
     initialize_parser = subparser.add_parser(
         "initialize",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help="Mark all the migrations as already executed",
+        help="Initialize the internal database",
         description=INITIALIZE_PARSER_DESCRIPTION,
     )
     initialize_parser.add_argument(
@@ -55,7 +55,7 @@ def create_initialize_parser(subparser):
         action="store_true",
         help=(
             "Inidicate that it should only create the migration "
-            "database table and mark the migrations that are already "
+            "database table but not mark the migrations that are already "
             "updated on the system as executed. If this value is not "
             "used then it will mark all the migrations as executed"
         ),
