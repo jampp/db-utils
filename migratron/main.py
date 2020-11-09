@@ -12,6 +12,10 @@ def main(args=None):
     parser = create_command_line_parser()
     parsed_args = parser.parse_args(args=args)
     subparser_name = parsed_args.subparser_name
+    if not subparser_name:
+        parser.print_help()
+        parser.exit(1)
+
     subparser_class = dict(
         initialize=InitializeCommand,
         migrate=RunMigrationCommand,
