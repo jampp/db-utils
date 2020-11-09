@@ -61,6 +61,11 @@ class BaseRunMigration(BaseHelper):
         executed_filenames = self._get_executed_migrations()
         self.assertEqual(executed_filenames, [self.valid_filenames[0]])
 
+        with self.assertRaises(Exception) as cm:
+            self.command.run()
+        self.assertNotIsInstance(cm.exception, TypeError)
+        self.assertIn("cleanup", str(cm.exception))
+
     def test_filter_migration_type(self):
         self._create_migration_files()
         self.command.migration_type = "pre"

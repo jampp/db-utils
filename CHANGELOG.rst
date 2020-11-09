@@ -12,6 +12,14 @@ bugs with user-visible outcomes.
 When major components get significant changes worthy of mention, they
 can be described in a Major section.
 
+v2.0.2 - Unreleased
+===================
+
+Bugfixes
+--------
+
+* Exception message is valid when using Python2 and Python3
+
 v2.0.1 - 2020-09-29
 ===================
 
