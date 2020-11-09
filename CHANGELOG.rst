@@ -18,12 +18,14 @@ v2.0.2 - Unreleased
 Bugfixes
 --------
 
-* Update the documentation to really document what migratron does
+* Document what migratron does
 
 Technical Tasks
 ---------------
 
 * Improve the documentation on how to setup migratron locally
+* Add documentation on how to run the tests
+* Add documentation on how migratron works
 
 
 v2.0.1 - 2020-09-29

@@ -53,7 +53,8 @@ to be able to use ``psql``. On Debian based distributions:
 Hive
 ====
 
-You need to setup ``beeline``. A **very** basic guide to do that is:
+You need to setup ``beeline``. This shouldn't be done on a production environment
+or locally, but a **very** basic guide is:
 
 .. code-block:: bash
 
@@ -70,7 +71,7 @@ You need to setup ``beeline``. A **very** basic guide to do that is:
     # Download apache-hadoop
     cd /opt && \
         curl https://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz -o hadoop-$HADOOP_VERSION.tar.gz && \
-        tar -xzf hadoop-2.5.1.tar.gz && \
+        tar -xzf hadoop-$HIVE_VERSION.tar.gz && \
         rm -rf apache-hive-bin.tar.gz
 
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
@@ -81,7 +82,8 @@ You need to setup ``beeline``. A **very** basic guide to do that is:
 PrestoDB or PrestoSQL
 =====================
 
-You need to setup ``presto-cli``. A **very** basic guide to do that is:
+You need to setup ``presto-cli``. This shouldn't be done on a production environment
+or locally, but a **very** basic guide is:
 
 .. code-block:: bash
 

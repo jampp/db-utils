@@ -14,9 +14,10 @@ which has the path of the executed files and when they were executed.
 ``Migratron`` will work by doing the following:
 
 - You write a plain SQL file as specified on :ref:`creating_a_migration`
-- It will check it internal database (chech `First Time`_),
-  it a migration failed to execute. In this case, you need to
-  run the ``cleanup`` migration.
+- It will check it internal database (check `First Time`_),
+  it a migration failed to execute. If that happens,
+  you need to run the ``cleanup`` subcommand. Check more
+  about rollbacking a migration on `What it won't do`_ section
 
 - Check which migrations are missing, and which ones should be
   executed: :term:`PRE`, :term:`POST`, or any. In any case,
@@ -28,7 +29,7 @@ which has the path of the executed files and when they were executed.
   a. Connect to the corresponding database using a command line tool
 
      - Hive: beeline
-     - PrestoSQL/PrestoDB: presto-cli
+     G- PrestoSQL/PrestoDB: presto-cli
      - PostgreSQL: psql
 
      and run one of the files. In any case, those command are required
