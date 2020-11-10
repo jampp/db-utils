@@ -19,6 +19,7 @@ Bugfixes
 --------
 
 * Exception message is valid when using Python2 and Python3
+* Make the subcommand required and print the help message if missing
 
 v2.0.1 - 2020-09-29
 ===================
