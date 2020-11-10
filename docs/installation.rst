@@ -36,8 +36,8 @@ Or you can install it from the repo:
     python setup.py install
 
 
-You will require different setup based on the database against
-you need to run the migrations
+You will require different setups based on the database against which
+you need to run the migrations.
 
 PostgreSQL
 ==========
@@ -97,4 +97,3 @@ or locally, but a **very** basic guide is:
 
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
     export PATH=$PATH:$HIVE_HOME/bin
-

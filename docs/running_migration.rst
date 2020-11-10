@@ -14,8 +14,8 @@ which has the path of the executed files and when they were executed.
 ``Migratron`` will work by doing the following:
 
 - You write a plain SQL file as specified on :ref:`creating_a_migration`
-- It will check it internal database (check `First Time`_),
-  it a migration failed to execute. If that happens,
+- It will check in its internal database (check `First Time`_)
+  if a migration failed to execute. If that happens,
   you need to run the ``cleanup`` subcommand. Check more
   about rollbacking a migration on `What it won't do`_ section
 
@@ -28,22 +28,22 @@ which has the path of the executed files and when they were executed.
 
   a. Connect to the corresponding database using a command line tool
 
-     - Hive: beeline
-     G- PrestoSQL/PrestoDB: presto-cli
-     - PostgreSQL: psql
+     - Hive: ``beeline``
+     - PrestoSQL/PrestoDB: ``presto-cli``
+     - PostgreSQL: ``psql``
 
-     and run one of the files. In any case, those command are required
+     and run one of the files. In any case, those commands are required
      to run the migrations. For more information on how to setup them,
      check the :ref:`Installation instructions <installation>`.
 
-  b. If the file run sucessfully update the status database. When using Hive
+  b. If the file run sucessfully, update the status database. When using Hive
      and PrestoSQL/PrestoDB you need to have another PostgreSQL database that
-     it is used to store ``migratron`` internal state. When using PostgreSQL
-     you might use the same database, or another database.
+     is used to store ``migratron`` internal state. When using PostgreSQL
+     you might use the same database, or another one.
 
-     If will also, store the hash of the file, to check if there is some change
+     It will also store the hash of the file, to check if there is some change
      on the file. It is ok to change the migration file when doing development,
-     but never change the migration file once that it has been executed in
+     but never change the migration file once it has been executed in
      production.
 
   c. If it failed, then it will store the information that the migration failed.
@@ -135,7 +135,7 @@ What it won't do
 This is a list of things that other systems do but ``migratron`` won't do:
 
 - Rollback a migration. If you want to downgrade the last migration or if a
-  migration failed to run, then you must rollback the changes manaully
+  migration failed to run, then you must rollback the changes manually.
 
 - The migrations are plain SQL files, so there they might not run on different
   databases.

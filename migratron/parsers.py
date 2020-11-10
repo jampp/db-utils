@@ -54,7 +54,7 @@ def create_initialize_parser(subparser):
         "--just-base-schema",
         action="store_true",
         help=(
-            "Inidicate that it should only create the migration "
+            "Indicate that it should only create the migration "
             "database table but not mark the migrations that are already "
             "updated on the system as executed. If this value is not "
             "used then it will mark all the migrations as executed"
