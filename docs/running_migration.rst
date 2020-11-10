@@ -11,7 +11,7 @@ Given a path where the migrations files are, it will check which have not been
 applied. For this, it has a custom table on the database called ``db_migrations``
 which has the path of the executed files and when they were executed.
 
-``Migratron`` will work by doing the following:
+``Migratron`` works by doing the following:
 
 - You write a plain SQL file as specified on :ref:`creating_a_migration`
 - It will check in its internal database (check `First Time`_)
@@ -36,7 +36,7 @@ which has the path of the executed files and when they were executed.
      to run the migrations. For more information on how to setup them,
      check the :ref:`Installation instructions <installation>`.
 
-  b. If the file run sucessfully, update the status database. When using Hive
+  b. If the file runs successfully, update the status database. When using Hive
      and PrestoSQL/PrestoDB you need to have another PostgreSQL database that
      is used to store ``migratron`` internal state. When using PostgreSQL
      you might use the same database, or another one.
@@ -137,5 +137,5 @@ This is a list of things that other systems do but ``migratron`` won't do:
 - Rollback a migration. If you want to downgrade the last migration or if a
   migration failed to run, then you must rollback the changes manually.
 
-- The migrations are plain SQL files, so there they might not run on different
+- Adapt migrations to different databases. The migrations are plain SQL files, so they might not run on different
   databases.
