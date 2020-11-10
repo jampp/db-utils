@@ -164,7 +164,7 @@ class BaseCommand(object):
                         "The following migration is already being "
                         'executed or failed: "%s", so you can not run the migration '
                         "system. If the migration failed then you must run the "
-                        '"cleanup" subcommand' % failed_or_running.keys()[0]
+                        '"cleanup" subcommand' % next(iter(failed_or_running.keys()))
                     )
 
                 if return_success:
