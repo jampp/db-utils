@@ -19,6 +19,8 @@ Bugfixes
 --------
 
 * Document what migratron does
+* Exception message is valid when using Python2 and Python3
+* Make the subcommand required and print the help message if missing
 
 Technical Tasks
 ---------------
