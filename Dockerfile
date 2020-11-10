@@ -1,4 +1,4 @@
-FROM python:3.7-buster
+FROM python:3.7-slim-buster
 
 LABEL version="2.0.1"
 LABEL maintainer="Jampp Tech Team <tech@jampp.com>"
@@ -23,10 +23,6 @@ USER root
 # Install OS dependencies
 RUN apt-get update && \
     apt-get install -y curl gcc python3 python3-dev libpq-dev openjdk-11-jre postgresql-contrib
-
-# Install pip
-RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python3 get-pip.py
 
 # Download all the Jars required to run Beeline
 RUN cd /opt && \
