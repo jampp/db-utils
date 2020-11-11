@@ -1,3 +1,5 @@
+.. _creating_a_migration:
+
 ========================
 Creating a new Migration
 ========================

@@ -18,8 +18,17 @@ v2.0.2 - Unreleased
 Bugfixes
 --------
 
+* Document what migratron does
 * Exception message is valid when using Python2 and Python3
 * Make the subcommand required and print the help message if missing
+
+Technical Tasks
+---------------
+
+* Improve the documentation on how to setup migratron locally
+* Add documentation on how to run the tests
+* Add documentation on how migratron works
+
 
 v2.0.1 - 2020-09-29
 ===================
