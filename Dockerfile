@@ -5,7 +5,7 @@ LABEL maintainer="Jampp Tech Team <tech@jampp.com>"
 
 # << Container build arguments
 
-ARG MIGRATRON_VERSION=2.0.1
+ARG MIGRATRON_VERSION=2.1.0
 ARG HIVE_VERSION=2.3.2
 ARG HADOOP_VERSION=2.5.1
 ARG PRESTO_CLI_VERSION=345
@@ -22,7 +22,7 @@ USER root
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y curl gcc python3 python3-dev libpq-dev openjdk-11-jre postgresql-contrib
+    apt-get install -y curl gcc python3-dev libpq-dev openjdk-11-jre postgresql-contrib
 
 # Download all the Jars required to run Beeline
 RUN cd /opt && \
