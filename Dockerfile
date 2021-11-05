@@ -34,14 +34,27 @@ RUN cd /opt && \
 RUN cd /opt && \
     curl https://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz -o hadoop-$HADOOP_VERSION.tar.gz && \
     tar -xzf hadoop-$HADOOP_VERSION.tar.gz && \
-    rm -rf apache-hive-bin.tar.gz
+    rm -rf hadoop-$HADOOP_VERSION.tar.gz
 
 # Download PrestoCli
 RUN mkdir /opt/presto-cli && \
     cd /opt/presto-cli && \
     curl https://repo1.maven.org/maven2/io/prestosql/presto-cli/$PRESTO_CLI_VERSION/presto-cli-$PRESTO_CLI_VERSION-executable.jar -o presto-cli && \
     chmod +x presto-cli
-    
 
 # Install migratron
-RUN pip install migratron==$MIGRATRON_VERSION
+# RUN pip install migratron==$MIGRATRON_VERSION
+# RUN pip install datacommon[livy]==5.0.0 --extra-index-url http://pypi.jampp.com/pypi/ --trusted-host pypi.jampp.com
+
+ADD ./data-common /opt/data-common
+RUN cd /opt/data-common && \
+    pip install -e . && \
+    pip install -e .[livy] && \
+    python setup.py install
+
+
+# Install local migratron
+ADD . /opt/migratron
+RUN cd /opt/migratron && \
+    python setup.py install
+

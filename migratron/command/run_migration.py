@@ -236,6 +236,32 @@ class RunMigrationCommand(BaseCommand):
                 "-f",
                 complete_filename
             ]
+        elif self.db_type == "livy":
+            from datacommon.livy import dbapi
+            from sqlalchemy.sql import text
+
+            with dbapi.connect(
+                # "emr-stg-etl.jampp.com",
+                # self.db_uri,
+                "livy",
+                queue= "etl",
+                spark_conf={
+                "spark.sql.catalog.hive_prod": "org.apache.iceberg.spark.SparkCatalog",
+                "spark.sql.catalog.hive_prod.type": "hive",
+                "spark.jars.packages" : "org.apache.iceberg:iceberg-spark3-runtime:0.12.0",
+                "spark.sql.catalog.hive_prod.uri": "thrift://hive-metastore:9083"
+                }
+            ) as conn:
+                logger.warning("Created connnection")
+                f = open(complete_filename)
+                query = f.read()
+                logger.info(query)
+                logger.info(f"query: {query} ")
+                logger.info(f"filename: {complete_filename} ")
+                conn.execute(query).fetchall()
+                logger.info("query executed")
+            command = ["true"]
+
         else:
             raise ValueError("Invalid database type")
 
