@@ -246,10 +246,10 @@ class RunMigrationCommand(BaseCommand):
                 "livy",
                 queue= "etl",
                 spark_conf={
-                "spark.sql.catalog.hive_prod": "org.apache.iceberg.spark.SparkCatalog",
-                "spark.sql.catalog.hive_prod.type": "hive",
-                "spark.jars.packages" : "org.apache.iceberg:iceberg-spark3-runtime:0.12.0",
-                "spark.sql.catalog.hive_prod.uri": "thrift://hive-metastore:9083"
+                    "spark.sql.catalog.hive_prod": "org.apache.iceberg.spark.SparkCatalog",
+                    "spark.sql.catalog.hive_prod.type": "hive",
+                    "spark.jars.packages" : "org.apache.iceberg:iceberg-spark3-runtime:0.12.0",
+                    "spark.sql.catalog.hive_prod.uri": "thrift://hive-metastore:9083"
                 }
             ) as conn:
                 logger.warning("Created connnection")

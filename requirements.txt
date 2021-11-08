@@ -1,4 +1,5 @@
-pygments==2.10.0
-psycopg2-binary==2.9.1
-datacommon[livy]==5.0.0
-six==1.16.0
+pygments
+psycopg2-binary
+six
+
+datacommon[livy]==5.0.0rc0

@@ -43,18 +43,5 @@ RUN mkdir /opt/presto-cli && \
     chmod +x presto-cli
 
 # Install migratron
-# RUN pip install migratron==$MIGRATRON_VERSION
-# RUN pip install datacommon[livy]==5.0.0 --extra-index-url http://pypi.jampp.com/pypi/ --trusted-host pypi.jampp.com
-
-ADD ./data-common /opt/data-common
-RUN cd /opt/data-common && \
-    pip install -e . && \
-    pip install -e .[livy] && \
-    python setup.py install
-
-
-# Install local migratron
 ADD . /opt/migratron
-RUN cd /opt/migratron && \
-    python setup.py install
-
+RUN pip install -e /opt/migratron --extra-index-url https://pypi.jampp.com/pypi --trusted-host pypi.jampp.com
