@@ -44,4 +44,4 @@ RUN mkdir /opt/presto-cli && \
 
 # Install migratron
 ADD . /opt/migratron
-RUN pip install -e /opt/migratron --extra-index-url https://pypi.jampp.com/pypi --trusted-host pypi.jampp.com
+RUN pip install -e /opt/migratron
