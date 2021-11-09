@@ -22,7 +22,7 @@ USER root
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y curl gcc python3-dev libpq-dev openjdk-11-jre postgresql-contrib
+    apt-get install -y curl gcc python3-dev libpq-dev openjdk-11-jre postgresql-contrib jq
 
 # Download all the Jars required to run Beeline
 RUN cd /opt && \
