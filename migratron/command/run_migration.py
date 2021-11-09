@@ -9,6 +9,9 @@ import shlex
 from logging import getLogger
 from datetime import datetime
 
+from sqlalchemy import create_engine
+from sqlalchemy.exc import ResourceClosedError
+
 from migratron.command.base import (
     BaseCommand,
     INSERT_MIGRATION_DATA,
@@ -236,32 +239,15 @@ class RunMigrationCommand(BaseCommand):
                 "-f",
                 complete_filename
             ]
-        elif self.db_type == "livy":
-            from datacommon.livy import dbapi
-            from sqlalchemy.sql import text
-
-            with dbapi.connect(
-                # "emr-stg-etl.jampp.com",
-                # self.db_uri,
-                "livy",
-                queue= "etl",
-                spark_conf={
-                    "spark.sql.catalog.hive_prod": "org.apache.iceberg.spark.SparkCatalog",
-                    "spark.sql.catalog.hive_prod.type": "hive",
-                    "spark.jars.packages" : "org.apache.iceberg:iceberg-spark3-runtime:0.12.0",
-                    "spark.sql.catalog.hive_prod.uri": "thrift://hive-metastore:9083"
-                }
-            ) as conn:
-                logger.warning("Created connnection")
-                f = open(complete_filename)
-                query = f.read()
-                logger.info(query)
-                logger.info(f"query: {query} ")
-                logger.info(f"filename: {complete_filename} ")
-                conn.execute(query).fetchall()
-                logger.info("query executed")
-            command = ["true"]
-
+        elif self.db_type == "sqlalchemy":
+            engine = create_engine(self.db_uri)
+            with engine.connect() as conn:
+                cursor = conn.execute(file_content)
+                try:
+                    cursor.fetchall()  # Force non async execution
+                except ResourceClosedError:
+                    pass
+            command = None
         else:
             raise ValueError("Invalid database type")
 
@@ -274,8 +260,9 @@ class RunMigrationCommand(BaseCommand):
                 else:
                     command += [option, value]
 
-        try:
-            subprocess.check_call(command)
-        except Exception:
-            logger.exception("Error while running the migration: %s", complete_filename)
-            raise
+        if command is not None:
+            try:
+                subprocess.check_call(command)
+            except Exception:
+                logger.exception("Error while running the migration: %s", complete_filename)
+                raise

@@ -1,5 +1,4 @@
 pygments
 psycopg2-binary
 six
-
-datacommon[livy]==5.0.0rc0
+sqlalchemy
