@@ -247,6 +247,7 @@ class RunMigrationCommand(BaseCommand):
                     cursor.fetchall()  # Force non async execution
                 except ResourceClosedError:
                     pass
+                conn.close()
             command = None
         else:
             raise ValueError("Invalid database type")
