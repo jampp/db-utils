@@ -22,7 +22,7 @@ USER root
 
 # Install OS dependencies
 RUN apt-get update && \
-    apt-get install -y curl gcc python3-dev libpq-dev openjdk-11-jre postgresql-contrib
+    apt-get install -y curl gcc python3-dev libpq-dev openjdk-11-jre postgresql-contrib jq
 
 # Download all the Jars required to run Beeline
 RUN cd /opt && \
@@ -34,14 +34,14 @@ RUN cd /opt && \
 RUN cd /opt && \
     curl https://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz -o hadoop-$HADOOP_VERSION.tar.gz && \
     tar -xzf hadoop-$HADOOP_VERSION.tar.gz && \
-    rm -rf apache-hive-bin.tar.gz
+    rm -rf hadoop-$HADOOP_VERSION.tar.gz
 
 # Download PrestoCli
 RUN mkdir /opt/presto-cli && \
     cd /opt/presto-cli && \
     curl https://repo1.maven.org/maven2/io/prestosql/presto-cli/$PRESTO_CLI_VERSION/presto-cli-$PRESTO_CLI_VERSION-executable.jar -o presto-cli && \
     chmod +x presto-cli
-    
 
 # Install migratron
-RUN pip install migratron==$MIGRATRON_VERSION
+ADD . /opt/migratron
+RUN pip install -e /opt/migratron

@@ -3,6 +3,9 @@
 import os
 import subprocess
 import unittest
+from tempfile import NamedTemporaryFile
+
+import sqlalchemy
 
 from .helper import BaseHelper, invalid_dbname
 from migratron.command.initialize import CREATE_TABLE_SQL
@@ -131,3 +134,36 @@ class HiveRunMigrationTest(BaseRunMigration):
                 "DROP TABLE IF EXISTS %s" % table_name
             ]
             subprocess.check_call(command)
+
+
+class SQLAlchemyRunMigrationTest(BaseRunMigration):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.dbfile = NamedTemporaryFile()
+        cls.database_uri = "sqlite:///" + cls.dbfile.name
+        cls.engine = sqlalchemy.create_engine(cls.database_uri)
+
+        super(BaseRunMigration, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.dbfile.close()
+
+    def create_command(self):
+        command = RunMigrationCommand(
+            migration_type=ALL_MIGRATION_TYPES,
+            just_list_files=False,
+            additional_options=None,
+            db_type="sqlalchemy",
+            db_uri=self.database_uri,
+            **self.BASE_ARGS
+        )
+        return command
+
+    def _check_table_exist(self, table_name):
+        return sqlalchemy.inspect(self.engine).has_table(table_name)
+
+    def _drop_tables(self):
+        for table_name in ['t0', 't1']:
+            self.engine.execute(sqlalchemy.text("DROP TABLE IF EXISTS %s" % table_name))

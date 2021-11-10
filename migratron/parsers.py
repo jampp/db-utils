@@ -86,7 +86,7 @@ def create_run_migration_parser(subparser):
     )
     migrate_parser.add_argument(
         "--db-type",
-        choices=("postgresql", "hive", "presto"),
+        choices=("postgresql", "hive", "presto", "sqlalchemy"),
         required=False,
         default="postgresql",
         help=(

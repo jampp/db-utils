@@ -97,3 +97,8 @@ or locally, but a **very** basic guide is:
 
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
     export PATH=$PATH:$HIVE_HOME/bin
+
+SQLAlchemy
+==========
+
+For the SQLAlchemy option you only need to install the drivers needed for you particular URI.

@@ -9,6 +9,9 @@ import shlex
 from logging import getLogger
 from datetime import datetime
 
+from sqlalchemy import create_engine
+from sqlalchemy.exc import ResourceClosedError
+
 from migratron.command.base import (
     BaseCommand,
     INSERT_MIGRATION_DATA,
@@ -236,6 +239,15 @@ class RunMigrationCommand(BaseCommand):
                 "-f",
                 complete_filename
             ]
+        elif self.db_type == "sqlalchemy":
+            engine = create_engine(self.db_uri)
+            with engine.connect() as conn:
+                cursor = conn.execute(file_content)
+                try:
+                    cursor.fetchall()  # Force non async execution
+                except ResourceClosedError:
+                    pass
+            command = None
         else:
             raise ValueError("Invalid database type")
 
@@ -248,8 +260,9 @@ class RunMigrationCommand(BaseCommand):
                 else:
                     command += [option, value]
 
-        try:
-            subprocess.check_call(command)
-        except Exception:
-            logger.exception("Error while running the migration: %s", complete_filename)
-            raise
+        if command is not None:
+            try:
+                subprocess.check_call(command)
+            except Exception:
+                logger.exception("Error while running the migration: %s", complete_filename)
+                raise
