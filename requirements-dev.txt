@@ -1,7 +1,7 @@
 twine==1.13.0
 flake8==3.5.0
 coverage==4.5.1
-black==19.3b0; python_version > '3.5'
+black==24.3.0; python_version > '3.5'
 flake8-blind-except==0.1.1; python_version > '3.6'
 pytest==4.6.3
 pytest-cov==2.7.1
